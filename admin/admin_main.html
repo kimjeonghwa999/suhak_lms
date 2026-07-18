@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>최고 관리자 시스템 - 프로토타입</title>
+    <!-- 프리미엄 어드민 UI를 위한 Tailwind CSS 로드 -->
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex">
+
+    <!-- [좌측 변하지 않는 사이드바] -->
+    <aside class="w-64 bg-slate-950 border-r border-slate-800 flex flex-col justify-between shrink-0">
+        <div>
+            <!-- 상단 로고 및 상태 (💡 메인에서 바꾼 이름으로 실시간 화이트 라벨링 연동) -->
+            <div class="p-6 border-b border-slate-800/60 bg-slate-950 flex items-center justify-between">
+                <span id="sync-admin-logo-text" class="text-sm font-black tracking-wider text-indigo-400">교육공감수학(주)</span>
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            </div>
+
+            <!-- 프로필 패널 -->
+            <div class="p-5 border-b border-slate-800/40 bg-slate-900/30 flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-indigo-600/30 border border-indigo-500/50 flex items-center justify-center text-sm font-bold text-indigo-300">
+                    AD
+                </div>
+                <div>
+                    <h2 class="text-xs font-bold text-slate-200">어드민 마스터</h2>
+                    <p class="text-[10px] text-slate-500 mt-0.5" id="live-time">2026-07-19 01:45</p>
+                </div>
+            </div>
+
+            <!-- 대시보드 메뉴 리스트 -->
+            <nav class="p-4 space-y-1 text-xs font-semibold text-slate-400">
+                <span class="block text-[10px] font-bold text-slate-600 uppercase tracking-widest px-3 mb-2">시스템 메뉴</span>
+                <button onclick="alert('콘텐츠 관리(CMS) 패널로 이동합니다.')" class="w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-800 hover:text-white transition flex items-center gap-2.5 group">
+                    <span class="text-slate-600 group-hover:text-indigo-400">📊</span> 콘텐츠관리 (CMS)
+                </button>
+                <button onclick="alert('메뉴 구성 관리 시스템을 엽니다.')" class="w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-800 hover:text-white transition flex items-center gap-2.5 group">
+                    <span class="text-slate-600 group-hover:text-indigo-400">🛠️</span> 메뉴관리
+                </button>
+                <button onclick="alert('전체 사이트 도메인 및 환경설정을 엽니다.')" class="w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-800 hover:text-white transition flex items-center gap-2.5 group">
+                    <span class="text-slate-600 group-hover:text-indigo-400">🌐</span> 사이트관리
+                </button>
+            </nav>
+        </div>
+
+        <!-- 하단 탈출 링크 -->
+        <div class="p-4 border-t border-slate-800/40">
+            <a href="../index.html" class="block w-full text-center bg-slate-800 hover:bg-slate-700 text-slate-300 py-2 rounded-xl text-xs font-medium transition">
+                로그아웃
+            </a>
+        </div>
+    </aside>
+
+    <!-- [우측 메인 작업 대시보드] -->
+    <main class="flex-1 flex flex-col min-w-0">
+        <!-- 상단 알림 바 (💡 메인에서 바꾼 이름이 문장 안에 자연스럽게 스며듦) -->
+        <header class="bg-indigo-600 text-white px-6 py-2.5 text-xs font-bold tracking-wide flex items-center gap-2">
+            <span>📢</span> 지도점검 및 보안 고도화를 적용한 <span id="sync-admin-banner-text" class="underline decoration-wavy decoration-amber-400">교육공감수학(주)</span> 마스터 관제 인프라에 오신 걸 환영합니다.
+        </header>
+
+        <!-- 메인 콘텐츠 카드 바구니 -->
+        <div class="p-8 flex-1 overflow-y-auto space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div>
+                    <h1 class="text-2xl font-black tracking-tight text-white">마스터 컨트롤 타워</h1>
+                    <p class="text-xs text-slate-400 mt-1">서버 리소스 및 전지점 수하 LMS 데이터 트래픽을 관제합니다.</p>
+                </div>
+                <span class="text-[11px] bg-slate-800 text-slate-400 border border-slate-700 px-3 py-1 rounded-full font-mono font-bold">SUPER_ADMIN_MODE</span>
+            </div>
+
+            <!-- 관제용 통계 카드 3종 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl">
+                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">전체 개설 클래스 수</span>
+                    <div class="flex items-baseline space-x-2 mt-2">
+                        <span class="text-3xl font-black text-indigo-400">142</span>
+                        <span class="text-xs text-emerald-400 font-bold">▲ 12%</span>
+                    </div>
+                </div>
+                <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl">
+                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">실시간 활성 학생 수</span>
+                    <div class="flex items-baseline space-x-2 mt-2">
+                        <span class="text-3xl font-black text-emerald-400">1,824</span>
+                        <span class="text-xs text-slate-500">명 접속중</span>
+                    </div>
+                </div>
+                <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl">
+                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">콘텐츠 DB 저장 용량</span>
+                    <div class="flex items-baseline space-x-2 mt-2">
+                        <span class="text-3xl font-black text-amber-400">84.2%</span>
+                        <span class="text-xs text-amber-500">임계치 접근</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 데이터 그리드 영역 -->
+            <div class="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden text-xs">
+                <div class="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/40">
+                    <span class="font-bold text-slate-200">최근 시스템 접근 로그</span>
+                    <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-1.5 rounded-lg text-[10px]" onclick="alert('로그 데이터를 엑셀로 내보냅니다.')">EXCEL 추출</button>
+                </div>
+                <div class="p-6 text-center text-slate-500 font-medium">
+                    🔍 현재 서버 커널 및 트래픽 이상 무. CMS 데이터 무결성이 유지되고 있습니다.
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 실시간 동기화 및 커스텀 로컬스토리지 주입 스크립트 -->
+    <script>
+        window.onload = function() {
+            // 메인 대문에서 설정한 전국 섬마을/분원 이름을 고스란히 읽어옵니다
+            const centerName = localStorage.getItem('custom_center_name') || "교육공감수학(주)";
+            
+            // 어드민 관제 화면 요소를 바뀐 이름으로 즉시 강제 매핑합니다
+            document.getElementById('sync-admin-logo-text').innerText = centerName;
+            document.getElementById('sync-admin-banner-text').innerText = centerName;
+            
+            updateTime();
+        };
+
+        function updateTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const date = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            
+            document.getElementById('live-time').innerText = `${year}-${month}-${date} ${hours}:${minutes}`;
+        }
+        setInterval(updateTime, 60000);
+    </script>
+</body>
+</html>

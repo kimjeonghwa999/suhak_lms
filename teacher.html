@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>선생님 메인 - 프로토타입</title>
+    <!-- 세련된 UI를 위한 Tailwind CSS 로드 -->
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- 상단 헤더 (브랜딩 통일) -->
+    <header class="bg-white border-b border-slate-100 shadow-sm sticky top-0 z-40">
+        <div class="max-w-6xl w-full mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <img src="https://icons8.com" alt="로고" class="h-8 object-contain">
+                <span class="text-lg font-bold tracking-tight text-slate-700">교육공감수학(주)</span>
+            </div>
+            <div class="flex items-center space-x-3">
+                <span class="text-xs bg-emerald-50 text-emerald-600 px-2.5 py-1 rounded-full font-medium">선생님 모드</span>
+                <a href="index.html" class="text-xs text-slate-400 hover:text-slate-600 transition">로그아웃</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 대시보드 콘텐츠 영역 -->
+    <main class="max-w-4xl w-full mx-auto px-4 py-8 flex-1">
+        
+        <!-- 대시보드 타이틀 및 필터 컨트롤 -->
+        <div class="bg-white p-6 rounded-2xl shadow-xl shadow-slate-100 border border-slate-100 mb-6">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                
+                <!-- 1. 클래스 대분류 선택 (초등/중등/고등) -->
+                <div class="flex-1">
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">과정 선택</label>
+                    <div class="inline-flex p-1 bg-slate-100 rounded-xl w-full md:w-auto">
+                        <button onclick="changeCourse('elementary')" id="btn-elem" class="flex-1 md:flex-none px-5 py-2 text-sm font-bold rounded-lg transition-all bg-white text-blue-600 shadow-sm">
+                            초등과정
+                        </button>
+                        <button onclick="changeCourse('middle')" id="btn-mid" class="flex-1 md:flex-none px-5 py-2 text-sm font-semibold rounded-lg transition-all text-slate-500 hover:text-slate-700">
+                            중등과정
+                        </button>
+                        <button onclick="changeCourse('high')" id="btn-high" class="flex-1 md:flex-none px-5 py-2 text-sm font-semibold rounded-lg transition-all text-slate-500 hover:text-slate-700">
+                            고등과정
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. 세부 클래스 셀렉트 박스 & 학생/클래스 토글 탭 -->
+                <div class="flex items-center space-x-3 self-end w-full md:w-auto justify-between md:justify-end">
+                    <div>
+                        <select id="class-select" class="bg-slate-50 border border-slate-200 text-sm font-medium rounded-xl p-2.5 focus:outline-none focus:border-blue-500 focus:bg-white transition">
+                            <!-- JS에서 대분류 선택에 따라 옵션이 동적으로 채워집니다 -->
+                        </select>
+                    </div>
+                    
+                    <div class="bg-slate-100 p-1 rounded-xl flex">
+                        <button class="px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-slate-600 rounded-lg">학생</button>
+                        <button class="px-3 py-1.5 text-xs font-bold text-slate-700 bg-white shadow-sm rounded-lg">클래스</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 단원 리스트 카드 섹션 -->
+        <div class="bg-white rounded-2xl shadow-xl shadow-slate-100 border border-slate-100 overflow-hidden transform transition-all">
+            <!-- 메인 바 헤더 -->
+            <div class="bg-slate-800 text-white p-5 flex items-center justify-between">
+                <div>
+                    <h3 id="panel-title" class="font-bold text-lg tracking-tight">초등 4-1 과정 목록</h3>
+                    <p class="text-xs text-slate-400 mt-0.5">선택한 과정의 교과 커리큘럼입니다.</p>
+                </div>
+                <span class="text-xs bg-slate-700 text-slate-300 px-2.5 py-1 rounded-md font-mono" id="chapter-count">Chapter 3</span>
+            </div>
+
+            <!-- 동적으로 변경될 단원 목록 리스트 -->
+            <div id="chapter-list" class="divide-y divide-slate-100">
+                <!-- JS에서 채워지는 영역 -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 시연용 목데이터 및 인터랙션 스크립트 -->
+    <script>
+        // 초등, 중등, 고등 가상 데이터 세팅
+        const courseData = {
+            elementary: {
+                title: "초등 4-1 과정 목록",
+                classes: ["01_초등학교과정", "02_초등심화반"],
+                chapters: ["Chapter 1. 평면도형의 이동", "Chapter 2. 막대그래프", "Chapter 3. 규칙찾기"]
+            },
+            middle: {
+                title: "중등 1-1 과정 목록",
+                classes: ["01_중학교기본반", "02_중등내신만점반"],
+                chapters: ["Chapter 1. 소인수분해", "Chapter 2. 정수와 유리수", "Chapter 3. 문자와 식", "Chapter 4. 일차방정식"]
+            },
+            high: {
+                title: "고등 수학(상) 과정 목록",
+                classes: ["01_고등수능대비반", "02_고등기초개념반"],
+                chapters: ["Chapter 1. 다항식의 연산", "Chapter 2. 방정식과 부등식", "Chapter 3. 도형의 방정식"]
+            }
+        };
+
+        // 초기 화면 세팅 (초등과정 기본 활성화)
+        window.onload = function() {
+            renderCourse('elementary');
+        };
+
+        // 과정 버튼 클릭 시 UI 전환 함수
+        function changeCourse(courseKey) {
+            // 버튼 스타일 초기화 및 타겟 버튼 활성화 처리
+            ['elem', 'mid', 'high'].forEach(k => {
+                const btn = document.getElementById(`btn-${k}`);
+                btn.className = "flex-1 md:flex-none px-5 py-2 text-sm font-semibold rounded-lg transition-all text-slate-500 hover:text-slate-700";
+            });
+            
+            const activeBtnMap = { elementary: 'elem', middle: 'mid', high: 'high' };
+            document.getElementById(`btn-${activeBtnMap[courseKey]}`).className = "flex-1 md:flex-none px-5 py-2 text-sm font-bold rounded-lg transition-all bg-white text-blue-600 shadow-sm";
+
+            // 데이터 렌더링 호출
+            renderCourse(courseKey);
+        }
+
+        // 선택된 과정 데이터를 화면에 그려주는 핵심 함수
+        function renderCourse(courseKey) {
+            const data = courseData[courseKey];
+            
+            // 1. 헤더 타이틀 및 챕터 갯수 변경
+            document.getElementById('panel-title').innerText = data.title;
+            document.getElementById('chapter-count').innerText = `Chapter ${data.chapters.length}`;
+
+            // 2. 우측 셀렉트박스 옵션 변경
+            const selectBox = document.getElementById('class-select');
+            selectBox.innerHTML = '';
+            data.classes.forEach(cls => {
+                const opt = document.createElement('option');
+                opt.innerText = cls;
+                selectBox.appendChild(opt);
+            });
+
+            // 3. 단원 리스트 변경 (애니메이션 효과를 주기 위해 잠시 투명하게 만들었다가 띄움)
+            const listContainer = document.getElementById('chapter-list');
+            listContainer.style.opacity = 0;
+            listContainer.innerHTML = '';
+
+            data.chapters.forEach(chap => {
+                const item = document.createElement('div');
+                item.className = "p-5 flex items-center justify-between hover:bg-slate-50 transition cursor-pointer group";
+                item.innerHTML = `
+                    <span class="text-sm font-medium text-slate-700 group-hover:text-blue-600 transition">${chap}</span>
+                    <button class="text-slate-300 group-hover:text-blue-500 transition p-1 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-slate-100" onclick="alert('${chap} 학습 리포트로 이동합니다.')">
+                        <!-- 프린트/저장 아이콘 대용 스페이스 -->
+                        <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                        </svg>
+                    </button>
+                `;
+                listContainer.appendChild(item);
+            });
+
+            setTimeout(() => { listContainer.style.opacity = 1; }, 50);
+        }
+    </script>
+</body>
+</html>

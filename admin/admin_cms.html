@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>최고 관리자 CMS - 스마트 문서 변환 - 프로토타입</title>
+    <!-- 프리미엄 관리 인프라 UI를 위한 Tailwind CSS 로드 -->
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex">
+
+    <!-- [좌측 통합 사이드바] -->
+    <aside class="w-64 bg-slate-950 border-r border-slate-800 flex flex-col justify-between shrink-0">
+        <div>
+            <div class="p-6 border-b border-slate-800/60 bg-slate-950 flex items-center justify-between">
+                <span id="sync-cms-logo" class="text-sm font-black tracking-wider text-indigo-400">교육공감수학(주)</span>
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            </div>
+
+            <nav class="p-4 space-y-1 text-xs font-semibold text-slate-400">
+                <span class="block text-[10px] font-bold text-slate-600 uppercase tracking-widest px-3 mb-2">시스템 메뉴</span>
+                <a href="admin_cms.html" class="w-full text-left px-3 py-2.5 rounded-xl bg-slate-800 text-white transition flex items-center gap-2.5">
+                    <span>📊</span> 콘텐츠관리 (CMS)
+                </a>
+                <a href="admin_main.html" class="w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-800 hover:text-white transition flex items-center gap-2.5 group">
+                    <span class="text-slate-600 group-hover:text-indigo-400">🖥️</span> 마스터 컨트롤 타워
+                </a>
+            </nav>
+        </div>
+        <div class="p-4 border-t border-slate-800/40">
+            <a href="../index.html" class="block w-full text-center bg-slate-800 hover:bg-slate-700 text-slate-300 py-2 rounded-xl text-xs font-medium transition">로그아웃</a>
+        </div>
+    </aside>
+
+    <!-- [우측 메인 CMS 작업 영역] -->
+    <main class="flex-1 flex flex-col min-w-0">
+        
+        <!-- 상단 헤더 경로 바 -->
+        <header class="bg-slate-950 border-b border-slate-800/60 px-8 py-4 flex items-center justify-between text-xs font-medium">
+            <div class="flex items-center space-x-2 text-slate-400">
+                <span>컨텐츠관리(CMS)</span>
+                <span>/</span>
+                <span class="text-slate-200 font-bold">지능형 문서 변환 엔진</span>
+            </div>
+            <span class="text-[11px] bg-slate-800 text-slate-400 border border-slate-700 px-3 py-1 rounded-full font-mono font-bold" id="sync-cms-brand-top">교육공감수학(주)</span>
+        </header>
+
+        <!-- 작업 캔버스 -->
+        <div class="p-6 flex-1 grid grid-cols-1 xl:grid-cols-12 gap-6 overflow-hidden h-[calc(100vh-53px)]">
+            
+            <!-- 📁 [좌측 5칸] 💡 문제 출제용 HWP / DOCX 가상 파일 업로드 섹션 -->
+            <section class="xl:col-span-5 bg-slate-950 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between space-y-6">
+                <div class="space-y-2">
+                    <h2 class="text-base font-black text-white flex items-center gap-1.5">
+                        📥 원본 교재 파일 업로드
+                    </h2>
+                    <p class="text-xs text-slate-400">한글(.hwp)이나 워드(.doc) 파일을 올리면 인공지능이 텍스트와 수식을 실시간 추출합니다.</p>
+                </div>
+
+                <!-- 드래그 앤 드롭 존 및 쌤플 선택 창 -->
+                <div class="border-2 border-dashed border-slate-800 hover:border-indigo-500 bg-slate-900/30 rounded-2xl p-8 text-center flex flex-col items-center justify-center space-y-4 group transition cursor-pointer">
+                    <span class="text-4xl group-hover:scale-110 transition duration-150">📄</span>
+                    <div class="text-xs space-y-1">
+                        <p class="font-bold text-slate-300">수학문제 한글/워드 파일 드래그 앤 드롭</p>
+                        <p class="text-slate-500">또는 내 컴퓨터에서 파일 찾기</p>
+                    </div>
+                </div>
+
+                <!-- 💡 대표님 시연 핵심 스위치: 샘플 한글 파일 선택 시 실시간 가상 파싱 가동 -->
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-3">
+                    <span class="block text-[10px] font-bold text-amber-500 uppercase tracking-widest">💡 시연 시뮬레이터 조작 가이드</span>
+                    <p class="text-[11px] text-slate-400">하단의 샘플 교재 문서 중 하나를 선택하면 웹 화면으로 바로 정렬 및 파싱되는 모습을 실연할 수 있습니다.</p>
+                    
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <button onclick="simulateParsing('hwp')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 p-2.5 rounded-xl font-bold border border-slate-700 transition active:scale-95 text-left flex items-center gap-1.5">
+                            <span class="text-blue-400 font-sans">HWP</span> 중3_실수와제곱근.hwp
+                        </button>
+                        <button onclick="simulateParsing('doc')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 p-2.5 rounded-xl font-bold border border-slate-700 transition active:scale-95 text-left flex items-center gap-1.5">
+                            <span class="text-blue-500 font-sans">DOC</span> 고등_다항식연산.docx
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 🖥️ [우측 7칸] 💡 한글/워드 파일이 웹에 즉시 퍼블리싱되는 가시화 창 -->
+            <section class="xl:col-span-7 bg-slate-950 border border-slate-800 rounded-2xl flex flex-col overflow-hidden">
+                <div class="p-4 border-b border-slate-800 bg-slate-900/30 flex items-center justify-between">
+                    <span class="font-bold text-xs text-slate-300 flex items-center gap-1.5">
+                        🖥️ 실시간 웹 퍼블리싱 프리뷰 판넬
+                    </span>
+                    <span id="parsing-status" class="text-[10px] text-slate-500 bg-slate-900 px-2.5 py-0.5 rounded border border-slate-800">문서 대기 중</span>
+                </div>
+
+                <!-- 파싱 결과물이 텍스트와 수식 폼으로 변환되어 나타나는 가상 터미널 -->
+                <div id="publishing-view" class="flex-1 p-6 overflow-y-auto space-y-6 text-xs text-slate-400 font-sans flex items-center justify-center">
+                    <!-- 초기 안내 메시지 -->
+                    <div class="text-center space-y-1" id="placeholder-msg">
+                        <p class="text-xl">🔍</p>
+                        <p class="font-medium text-slate-500">좌측 시뮬레이터에서 샘플 원본 파일을 선택하면<br>웹 문제 은행으로 즉시 자동 파싱 및 퍼블리싱이 진행됩니다.</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- 실시간 웹 파싱 가상 구동 엔진 -->
+    <script>
+        window.onload = function() {
+            const centerName = localStorage.getItem('custom_center_name') || "교육공감수학(주)";
+            document.getElementById('sync-cms-logo').innerText = centerName;
+            document.getElementById('sync-cms-brand-top').innerText = centerName;
+        };
+
+        // HWP 및 DOC 문서 파싱 가상 템플릿 데이터베이스
+        const parsedTemplates = {
+            hwp: `
+                <div class="w-full space-y-5 animate-in fade-in slide-in-from-bottom-3 duration-200 text-left">
+                    <div class="bg-blue-500/10 border border-blue-500/20 p-3 rounded-xl flex items-center justify-between text-blue-400">
+                        <span class="font-bold">✓ 중3_실수와제곱근.hwp 구조 해석 완료</span>
+                        <span class="font-mono text-[10px]">추출 문항: 2개</span>
+                    </div>
+                    
+                    <!-- 추출 문항 1 -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3">
+                        <div class="flex items-center justify-between text-[11px] text-slate-400 font-bold border-b border-slate-800 pb-2">
+                            <span>[문항 1] 유형: 주관식 기본</span>
+                            <span class="text-indigo-400 font-mono">ID: CPM-3101</span>
+                        </div>
+                        <p class="text-slate-200 font-bold leading-relaxed">다음 수의 제곱근을 구하시오.</p>
+                        <div class="p-3 bg-slate-950 border border-slate-850 rounded-lg text-slate-400 font-mono font-semibold">
+                            (1) 16 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (2) 0.09
+                        </div>
+                    </div>
+
+                    <!-- 추출 문항 2 -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3">
+                        <div class="flex items-center justify-between text-[11px] text-slate-400 font-bold border-b border-slate-800 pb-2">
+                            <span>[문항 2] 유형: 객관식 연산</span>
+                            <span class="text-indigo-400 font-mono">ID: CPM-3102</span>
+                        </div>
+                        <p class="text-slate-200 font-bold leading-relaxed">다음 보기 중 옳은 것을 모두 고른 것은?</p>
+                        <div class="p-3 bg-slate-950 border border-slate-850 rounded-lg text-slate-400 font-sans leading-relaxed space-y-1">
+                            <p>ㄱ. 0의 제곱근은 없다.</p>
+                            <p>ㄴ. √(-4)의 제곱은 -4이다.</p>
+                            <p>ㄷ. 제곱근 9는 ±3이다.</p>
+                        </div>
+                    </div>
+                </div>
+            `,
+            doc: `
+                <div class="w-full space-y-5 animate-in fade-in slide-in-from-bottom-3 duration-200 text-left">
+                    <div class="bg-emerald-500/10 border border-emerald-500/20 p-3 rounded-xl flex items-center justify-between text-emerald-400">
+                        <span class="font-bold">✓ 고등_다항식연산.docx 구조 해석 완료</span>
+                        <span class="font-mono text-[10px]">추출 문항: 1개</span>
+                    </div>
+                    
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3">
+                        <div class="flex items-center justify-between text-[11px] text-slate-400 font-bold border-b border-slate-800 pb-2">
+                            <span>[문항 1] 유형: 고등 다항식 전개</span>
+                            <span class="text-indigo-400 font-mono">ID: CPM-H101</span>
+코드를 사용할 때는 주의가 필요합니다.두 다항식 A = x² - 2x + 3, B = 2x² + x - 1 에 대하여 A + 2B 를 계산하시오.`};// 실시간 변환 로딩 및 파싱 미니어처 시연 모션function simulateParsing(typeKey) {const container = document.getElementById('publishing-view');const statusNode = document.getElementById('parsing-status');statusNode.innerText = "⏳ 문서 구조 추출 및 데이터 해석 중...";statusNode.className = "text-[10px] text-amber-400 bg-amber-500/5 px-2.5 py-0.5 rounded border border-amber-500/20 font-bold animate-pulse";container.innerHTML = <div class="text-center space-y-2"> <div class="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto"></div> <p class="text-slate-500 font-semibold font-mono text-[11px]">PARSING MS-WORD / HWP TEXT DATA ENGINE RUNNING...</p> </div>;// 0.8초 뒤 웹 배포 완료된 추출 템플릿 로드setTimeout(() => {statusNode.innerText = "✓ 실시간 웹 자동 배포 전송 완료";statusNode.className = "text-[10px] text-emerald-400 bg-emerald-500/5 px-2.5 py-0.5 rounded border border-emerald-500/20 font-bold";container.innerHTML = parsedTemplates[typeKey];}, 800);}

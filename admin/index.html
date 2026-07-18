@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>최고 관리자 로그인 - 프로토타입</title>
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between">
+
+    <!-- 상단 보안 인지 바 (지역 가변 명칭 연동) -->
+    <header class="bg-slate-900 border-b border-slate-800 text-xs px-6 py-3 flex items-center justify-between font-semibold tracking-wide">
+        <div class="flex items-center space-x-2 text-indigo-400">
+            <span>🛡️</span> 
+            <!-- 💡 실시간 연동 매핑 영역 -->
+            <span id="sync-admin-security-text">교육공감수학(주) 통합 보안 시스템</span>
+        </div>
+        <div class="text-slate-500 font-mono text-[11px]">ADMIN_PORTAL</div>
+    </header>
+
+    <main class="flex-1 flex items-center justify-center px-4 my-12">
+        <div class="max-w-md w-full p-10 bg-slate-900 rounded-3xl border border-slate-800 shadow-2xl text-center space-y-8">
+            <div class="space-y-2">
+                <h1 id="sync-admin-main-logo" class="text-2xl font-black tracking-tight text-white">교육공감수학(주)</h1>
+                <p class="text-xs text-indigo-400 font-bold tracking-widest uppercase">최고 관리자 인증 센터</p>
+            </div>
+            <form class="space-y-4 text-left" onsubmit="event.preventDefault();">
+                <button type="button" onclick="location.href='admin_main.html'" class="w-full bg-indigo-600 text-white p-3.5 font-bold rounded-xl hover:bg-indigo-700 transition">보안 시스템 접속</button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        window.onload = function() {
+            const name = localStorage.getItem('custom_center_name') || "교육공감수학(주)";
+            document.getElementById('sync-admin-main-logo').innerText = name;
+            document.getElementById('sync-admin-security-text').innerText = `${name} 통합 보안 시스템`;
+        }
+    </script>
+</body>
+</html>

@@ -3,161 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>자기주도학습 전용 사이트 - 프로토타입</title>
-    <!-- 구식 디자인을 완전히 탈피하기 위한 깔끔한 Tailwind CSS 로드 -->
+    <title>교육공감수학(주) - 통합 서비스 허브</title>
     <script src="https://tailwindcss.com"></script>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col justify-between">
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between">
 
-    <!-- [1] 사용자 화면 (메인 로그인 페이지) -->
-    <div id="user-page" class="w-full flex-1 flex flex-col">
-        <!-- 상단 헤더 (로고 영역) -->
-        <header class="p-6 max-w-6xl w-full mx-auto flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-                <!-- 동적으로 변경될 로고 이미지 -->
-                <img id="main-logo" src="https://icons8.com" alt="로고" class="h-10 object-contain">
-                <span id="logo-text" class="text-xl font-bold tracking-tight text-slate-700">교육공감수학(주)</span>
-            </div>
-            <!-- 데모 시연을 위해 우측 상단에 관리자 모드 전환 버튼 배치 -->
-            <button onclick="switchMode('admin')" class="text-xs bg-slate-200 text-slate-600 px-3 py-1.5 rounded-full hover:bg-indigo-600 hover:text-white transition font-medium">
-                ⚙️ 기획자 제어판 열기
+    <!-- 상단 보안 인지 바 (커스텀 명칭 실시간 연동) -->
+    <header class="bg-slate-900 border-b border-slate-800 text-xs px-6 py-3 flex items-center justify-between font-semibold tracking-wide">
+        <div class="flex items-center space-x-2 text-blue-400">
+            <span>🛡️</span> 
+            <span id="header-brand-title">교육공감수학(주) 통합 보안 시스템</span>
+        </div>
+        <div class="flex items-center space-x-4">
+            <!-- 💡 대표님 시연용 실시간 커스텀 설정 제어판 버튼 -->
+            <button onclick="toggleSetupPanel()" class="text-[11px] bg-amber-600/10 text-amber-400 border border-amber-500/30 px-2.5 py-1 rounded-xl hover:bg-amber-600 hover:text-slate-950 transition font-black tracking-tight">
+                ⚙️ 지역 센터명 커스텀 설정
             </button>
-        </header>
+            <a href="admin/index.html" class="text-[11px] text-slate-500 hover:text-blue-400 transition">최고 관리자 콘솔</a>
+        </div>
+    </header>
 
-        <!-- 중앙 로그인 섹션 -->
-        <main class="flex-1 flex items-center justify-center px-4 mb-20">
-            <div class="max-w-md w-full p-10 bg-white rounded-2xl shadow-xl shadow-slate-100 border border-slate-100 text-center transform transition-all">
-                <!-- 동적으로 변경될 메인 타이틀 문구 -->
-                <h2 id="site-title" class="text-3xl font-extrabold text-blue-600 mb-2 tracking-tight">자기주도학습 전용 사이트</h2>
-                <p class="text-sm text-slate-400 mb-8">안전한 학습 환경을 위해 로그인이 필요합니다.</p>
-                
-                <form class="space-y-4 text-left" onsubmit="event.preventDefault();">
-                    <div>
-                        <input type="text" placeholder="아이디를 입력해주세요" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition text-sm">
-                    </div>
-                    <div>
-                        <input type="password" placeholder="비밀번호를 입력해주세요" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition text-sm">
-                    </div>
-                    <button type="button" class="w-full bg-blue-600 text-white p-3.5 font-bold rounded-xl hover:bg-blue-700 active:scale-[0.99] transition shadow-lg shadow-blue-100 mt-2">
-                        로그인
-                    </button>
-                </form>
-
-                <div class="flex justify-center space-x-4 mt-8 text-xs font-medium text-slate-400">
-                    <a href="#" class="hover:text-slate-600 transition">회원가입</a>
-                    <span class="text-slate-200">|</span>
-                    <a href="#" class="hover:text-slate-600 transition">아이디 / 패스워드 찾기</a>
-                </div>
-            </div>
-        </main>
-    </div>
-
-
-    <!-- [2] 기획 시연용 관리자 제어판 (기본 숨김 상태) -->
-    <div id="admin-page" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-        <div class="max-w-md w-full bg-white rounded-2xl shadow-2xl p-6 border border-slate-100 animate-in fade-in zoom-in-95 duration-200">
-            <div class="flex items-center justify-between mb-6">
-                <h1 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                    🖥️ 실시간 UI 관리자 제어판
-                </h1>
-                <button onclick="switchMode('user')" class="text-slate-400 hover:text-slate-600 text-sm font-bold p-1">✕</button>
-            </div>
+    <!-- 중앙 통합 플랫폼 진입 허브 -->
+    <main class="flex-1 flex items-center justify-center px-4 my-12 relative">
+        
+        <!-- [메인 카드 세션] -->
+        <div class="max-w-md w-full p-10 bg-slate-900 rounded-3xl border border-slate-800 shadow-2xl text-center space-y-8 z-10">
             
-            <p class="text-xs text-amber-600 bg-amber-50 p-3 rounded-lg mb-5 font-medium leading-relaxed">
-                💡 <b>대표님 시연 팁:</b> 여기서 로고 이미지나 텍스트를 바꾸고 저장하면, 개발자 수정 없이 메인 페이지가 즉시 리브랜딩되는 모습을 보여줄 수 있습니다.
-            </p>
-
-            <div class="space-y-5">
-                <!-- 1. 타이틀 수정 -->
-                <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">메인 타이틀 문구</label>
-                    <input type="text" id="input-title" class="w-full p-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 text-sm">
+            <!-- 브랜딩 통합 로고 및 기관 이름 (실시간 반영 노드) -->
+            <div class="space-y-2">
+                <div class="inline-flex p-3 bg-blue-600/10 rounded-2xl border border-blue-500/30 mb-2">
+                    <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8 text-blue-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a48.67 48.67 0 014.2-3.143m11.282 3.143a48.67 48.67 0 00-4.2-3.143m-7.08 3.143c.06-.444.117-.893.17-1.346m6.74 1.346a63.99 63.99 0 00-.17-1.346m-6.57 1.346a48.4 48.4 0 005.716 3.3c.166.085.341.127.518.127.177 0 .352-.042.518-.127a48.4 48.4 0 005.716-3.3m-11.432-1.346a48.65 48.65 0 012.352-2.775m5.308 2.775a48.65 48.65 0 00-2.352-2.775m0 0c.427-.514.821-1.054 1.176-1.616m0 0a48.6 48.6 0 001.177 1.616" />
+                    </svg>
                 </div>
-
-                <!-- 2. 회사명 수정 -->
-                <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">상단 회사명 텍스트</label>
-                    <input type="text" id="input-company" class="w-full p-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 text-sm">
-                </div>
-
-                <!-- 3. 로고 이미지 파일 선택 (가상 업로드 기능) -->
-                <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">새로운 로고 이미지 선택</label>
-                    <input type="file" id="input-logo-file" accept="image/*" class="w-full p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs">
-                </div>
+                <h1 id="dynamic-logo-text" class="text-2xl font-black tracking-tight text-white">교육공감수학(주)</h1>
+                <p id="dynamic-sub-text" class="text-xs text-blue-400 font-bold tracking-widest uppercase">자기주도학습 전용 시스템</p>
             </div>
 
-            <div class="flex space-x-2 mt-8">
-                <button onclick="switchMode('user')" class="flex-1 bg-slate-100 text-slate-500 p-3 font-semibold rounded-xl hover:bg-slate-200 transition text-sm">
-                    취소
+            <!-- 유저 로그인 정보 세션 -->
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/80 flex items-center justify-between text-left">
+                <div>
+                    <p class="text-xs text-slate-400 font-medium">
+                        <span class="text-blue-400 font-black text-sm">김정화테스트</span> 님
+                    </p>
+                    <p class="text-[10px] text-slate-500 mt-0.5">접속 권한: 정교사 / 운영자</p>
+                </div>
+                <button onclick="alert('로그아웃 되었습니다.')" class="bg-slate-850 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-slate-200 px-3 py-1.5 rounded-lg text-[10px] font-bold transition">
+                    로그아웃
                 </button>
-                <button onclick="saveSettings()" class="flex-1 bg-indigo-600 text-white p-3 font-bold rounded-xl hover:bg-indigo-700 shadow-lg shadow-indigo-100 transition text-sm">
-                    설정 적용하기
-                </button>
+            </div>
+
+            <!-- 시스템 분기 카드 메뉴 -->
+            <div class="space-y-3 text-left">
+                <span class="block text-[10px] font-bold text-slate-600 uppercase tracking-widest pl-1">접속 가능한 시스템 목록</span>
+                <div onclick="location.href='teacher/teacher_main.html'" class="p-4 bg-slate-950/60 border border-slate-800 hover:border-blue-500/50 rounded-2xl cursor-pointer transition-all duration-200 group flex items-center justify-between shadow-inner">
+                    <div class="space-y-0.5">
+                        <h4 class="text-xs font-bold text-slate-200 group-hover:text-blue-400 transition">📝 학습 관리 시스템 (LMS)</h4>
+                        <p class="text-[10px] text-slate-500">학생 진도 관리, 단원 커리큘럼 및 문제 출제 콘솔</p>
+                    </div>
+                    <span class="text-slate-600 group-hover:text-blue-400 transition text-sm">▶</span>
+                </div>
             </div>
         </div>
-    </div>
 
+        <!-- 💡 [시연용 설정 팝업 창] 마법의 이름 변경 컨트롤러 -->
+        <div id="setup-panel" class="hidden absolute max-w-sm w-full bg-slate-900 border-2 border-amber-500/50 p-6 rounded-3xl shadow-2xl z-20 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                <h3 class="text-xs font-black text-amber-400">📍 전국 섬/지역 분원 커스텀 모듈</h3>
+                <button onclick="toggleSetupPanel()" class="text-slate-500 hover:text-white text-xs font-bold p-1">✕</button>
+            </div>
+            <div class="space-y-3 text-left">
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 mb-1">1. 보급 지역 및 기관명 입력</label>
+                    <input type="text" id="input-center-name" placeholder="예: 신안 낙도 어린이 공부방" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded-xl text-xs text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 mb-1">2. 서브 타이틀 문구 입력</label>
+                    <input type="text" id="input-center-sub" placeholder="예: 도서지역 자기주도학습 지원센터" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded-xl text-xs text-white focus:outline-none focus:border-amber-500">
+                </div>
+            </div>
+            <button onclick="applyCenterSetup()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-black py-2.5 rounded-xl text-xs transition shadow-lg shadow-amber-950/50">
+                해당 지역 시스템 명칭으로 즉시 변경
+            </button>
+        </div>
 
-    <!-- [3] 가상 데이터 연동 스크립트 -->
+    </main>
+
+    <footer class="bg-slate-950 border-t border-slate-900 px-6 py-4 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 gap-2">
+        <span id="footer-brand-title">교육공감수학(주) 통합 교육 인프라 v2.0</span>
+        <span class="font-medium tracking-tight">거의 모든 학생의 성적이 지속적으로 향상됩니다.</span>
+    </footer>
+
     <script>
-        // 페이지 로드 시 기존에 저장된 커스텀 UI 정보가 있는지 확인하고 세팅합니다.
-        window.onload = function() {
-            loadSettings();
-        };
+        window.onload = function() { loadSettings(); };
 
-        // 관리자 창 열고 닫기 스위치
-        function switchMode(mode) {
-            const adminPage = document.getElementById('admin-page');
-            if (mode === 'admin') {
-                adminPage.classList.remove('hidden');
-                // 기존 입력창들에 현재 텍스트들을 미리 채워넣어 줍니다.
-                document.getElementById('input-title').value = document.getElementById('site-title').innerText;
-                document.getElementById('input-company').value = document.getElementById('logo-text').innerText;
-            } else {
-                adminPage.classList.add('hidden');
-            }
+        function toggleSetupPanel() {
+            document.getElementById('setup-panel').classList.toggle('hidden');
+            document.getElementById('input-center-name').value = document.getElementById('dynamic-logo-text').innerText;
+            document.getElementById('input-center-sub').value = document.getElementById('dynamic-sub-text').innerText;
         }
 
-        // 브라우저 내부 보관함(localStorage)에 바뀐 UI 설정을 임시 저장
-        function saveSettings() {
-            const newTitle = document.getElementById('input-title').value;
-            const newCompany = document.getElementById('input-company').value;
-            const logoFile = document.getElementById('input-logo-file').files[0];
+        // 입력받은 이름을 저장소에 세팅하여 전 소스코드에 배포함
+        function applyCenterSetup() {
+            const name = document.getElementById('input-center-name').value.trim() || "교육공감수학(주)";
+            const sub = document.getElementById('input-center-sub').value.trim() || "자기주도학습 전용 시스템";
 
-            localStorage.setItem('site_title', newTitle);
-            localStorage.setItem('logo_text', newCompany);
+            localStorage.setItem('custom_center_name', name);
+            localStorage.setItem('custom_center_sub', sub);
 
-            // 사용자가 새 이미지를 올린 경우 Base64 데이터 문장으로 변환하여 저장 (서버가 필요 없는 비결)
-            if (logoFile) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    localStorage.setItem('logo_image', e.target.result);
-                    applyUI(newTitle, newCompany, e.target.result);
-                }
-                reader.readAsDataURL(logoFile);
-            } else {
-                applyUI(newTitle, newCompany, localStorage.getItem('logo_image'));
-            }
-
-            switchMode('user');
+            applyUI(name, sub);
+            toggleSetupPanel();
+            alert(`💡 화이트 라벨링 시연 성공!\n\n전체 시스템이 [ ${name} ] 전용 플랫폼으로 일괄 동기화되었습니다.`);
         }
 
-        // 저장소 데이터를 읽어와서 화면에 글자와 이미지를 매핑하는 기능
         function loadSettings() {
-            const savedTitle = localStorage.getItem('site_title') || '자기주도학습 전용 사이트';
-            const savedCompany = localStorage.getItem('logo_text') || '교육공감수학(주)';
-            const savedLogo = localStorage.getItem('logo_image') || 'https://icons8.com';
-            applyUI(savedTitle, savedCompany, savedLogo);
+            const name = localStorage.getItem('custom_center_name') || "교육공감수학(주)";
+            const sub = localStorage.getItem('custom_center_sub') || "자기주도학습 전용 시스템";
+            applyUI(name, sub);
         }
 
-        // 화면 UI 요소를 최종 변경해주는 함수
-        function applyUI(title, company, logoSrc) {
-            document.getElementById('site-title').innerText = title;
-            document.getElementById('logo-text').innerText = company;
-            if (logoSrc) {
-                document.getElementById('main-logo').src = logoSrc;
-            }
+        function applyUI(name, sub) {
+            document.getElementById('dynamic-logo-text').innerText = name;
+            document.getElementById('dynamic-sub-text').innerText = sub;
+            document.getElementById('header-brand-title').innerText = `${name} 통합 보안 시스템`;
+            document.getElementById('footer-brand-title').innerText = `${name} 통합 교육 인프라 v2.0`;
         }
     </script>
 </body>

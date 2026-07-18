@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자기주도학습 전용 사이트 - 프로토타입</title>
+    <!-- 구식 디자인을 완전히 탈피하기 위한 깔끔한 Tailwind CSS 로드 -->
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col justify-between">
+
+    <!-- [1] 사용자 화면 (메인 로그인 페이지) -->
+    <div id="user-page" class="w-full flex-1 flex flex-col">
+        <!-- 상단 헤더 (로고 영역) -->
+        <header class="p-6 max-w-6xl w-full mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <!-- 동적으로 변경될 로고 이미지 -->
+                <img id="main-logo" src="https://icons8.com" alt="로고" class="h-10 object-contain">
+                <span id="logo-text" class="text-xl font-bold tracking-tight text-slate-700">교육공감수학(주)</span>
+            </div>
+            <!-- 데모 시연을 위해 우측 상단에 관리자 모드 전환 버튼 배치 -->
+            <button onclick="switchMode('admin')" class="text-xs bg-slate-200 text-slate-600 px-3 py-1.5 rounded-full hover:bg-indigo-600 hover:text-white transition font-medium">
+                ⚙️ 기획자 제어판 열기
+            </button>
+        </header>
+
+        <!-- 중앙 로그인 섹션 -->
+        <main class="flex-1 flex items-center justify-center px-4 mb-20">
+            <div class="max-w-md w-full p-10 bg-white rounded-2xl shadow-xl shadow-slate-100 border border-slate-100 text-center transform transition-all">
+                <!-- 동적으로 변경될 메인 타이틀 문구 -->
+                <h2 id="site-title" class="text-3xl font-extrabold text-blue-600 mb-2 tracking-tight">자기주도학습 전용 사이트</h2>
+                <p class="text-sm text-slate-400 mb-8">안전한 학습 환경을 위해 로그인이 필요합니다.</p>
+                
+                <form class="space-y-4 text-left" onsubmit="event.preventDefault();">
+                    <div>
+                        <input type="text" placeholder="아이디를 입력해주세요" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition text-sm">
+                    </div>
+                    <div>
+                        <input type="password" placeholder="비밀번호를 입력해주세요" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition text-sm">
+                    </div>
+                    <button type="button" class="w-full bg-blue-600 text-white p-3.5 font-bold rounded-xl hover:bg-blue-700 active:scale-[0.99] transition shadow-lg shadow-blue-100 mt-2">
+                        로그인
+                    </button>
+                </form>
+
+                <div class="flex justify-center space-x-4 mt-8 text-xs font-medium text-slate-400">
+                    <a href="#" class="hover:text-slate-600 transition">회원가입</a>
+                    <span class="text-slate-200">|</span>
+                    <a href="#" class="hover:text-slate-600 transition">아이디 / 패스워드 찾기</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <!-- [2] 기획 시연용 관리자 제어판 (기본 숨김 상태) -->
+    <div id="admin-page" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div class="max-w-md w-full bg-white rounded-2xl shadow-2xl p-6 border border-slate-100 animate-in fade-in zoom-in-95 duration-200">
+            <div class="flex items-center justify-between mb-6">
+                <h1 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                    🖥️ 실시간 UI 관리자 제어판
+                </h1>
+                <button onclick="switchMode('user')" class="text-slate-400 hover:text-slate-600 text-sm font-bold p-1">✕</button>
+            </div>
+            
+            <p class="text-xs text-amber-600 bg-amber-50 p-3 rounded-lg mb-5 font-medium leading-relaxed">
+                💡 <b>대표님 시연 팁:</b> 여기서 로고 이미지나 텍스트를 바꾸고 저장하면, 개발자 수정 없이 메인 페이지가 즉시 리브랜딩되는 모습을 보여줄 수 있습니다.
+            </p>
+
+            <div class="space-y-5">
+                <!-- 1. 타이틀 수정 -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">메인 타이틀 문구</label>
+                    <input type="text" id="input-title" class="w-full p-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 text-sm">
+                </div>
+
+                <!-- 2. 회사명 수정 -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">상단 회사명 텍스트</label>
+                    <input type="text" id="input-company" class="w-full p-3 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 text-sm">
+                </div>
+
+                <!-- 3. 로고 이미지 파일 선택 (가상 업로드 기능) -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">새로운 로고 이미지 선택</label>
+                    <input type="file" id="input-logo-file" accept="image/*" class="w-full p-2 border border-slate-200 rounded-xl bg-slate-50 text-xs">
+                </div>
+            </div>
+
+            <div class="flex space-x-2 mt-8">
+                <button onclick="switchMode('user')" class="flex-1 bg-slate-100 text-slate-500 p-3 font-semibold rounded-xl hover:bg-slate-200 transition text-sm">
+                    취소
+                </button>
+                <button onclick="saveSettings()" class="flex-1 bg-indigo-600 text-white p-3 font-bold rounded-xl hover:bg-indigo-700 shadow-lg shadow-indigo-100 transition text-sm">
+                    설정 적용하기
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- [3] 가상 데이터 연동 스크립트 -->
+    <script>
+        // 페이지 로드 시 기존에 저장된 커스텀 UI 정보가 있는지 확인하고 세팅합니다.
+        window.onload = function() {
+            loadSettings();
+        };
+
+        // 관리자 창 열고 닫기 스위치
+        function switchMode(mode) {
+            const adminPage = document.getElementById('admin-page');
+            if (mode === 'admin') {
+                adminPage.classList.remove('hidden');
+                // 기존 입력창들에 현재 텍스트들을 미리 채워넣어 줍니다.
+                document.getElementById('input-title').value = document.getElementById('site-title').innerText;
+                document.getElementById('input-company').value = document.getElementById('logo-text').innerText;
+            } else {
+                adminPage.classList.add('hidden');
+            }
+        }
+
+        // 브라우저 내부 보관함(localStorage)에 바뀐 UI 설정을 임시 저장
+        function saveSettings() {
+            const newTitle = document.getElementById('input-title').value;
+            const newCompany = document.getElementById('input-company').value;
+            const logoFile = document.getElementById('input-logo-file').files[0];
+
+            localStorage.setItem('site_title', newTitle);
+            localStorage.setItem('logo_text', newCompany);
+
+            // 사용자가 새 이미지를 올린 경우 Base64 데이터 문장으로 변환하여 저장 (서버가 필요 없는 비결)
+            if (logoFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    localStorage.setItem('logo_image', e.target.result);
+                    applyUI(newTitle, newCompany, e.target.result);
+                }
+                reader.readAsDataURL(logoFile);
+            } else {
+                applyUI(newTitle, newCompany, localStorage.getItem('logo_image'));
+            }
+
+            switchMode('user');
+        }
+
+        // 저장소 데이터를 읽어와서 화면에 글자와 이미지를 매핑하는 기능
+        function loadSettings() {
+            const savedTitle = localStorage.getItem('site_title') || '자기주도학습 전용 사이트';
+            const savedCompany = localStorage.getItem('logo_text') || '교육공감수학(주)';
+            const savedLogo = localStorage.getItem('logo_image') || 'https://icons8.com';
+            applyUI(savedTitle, savedCompany, savedLogo);
+        }
+
+        // 화면 UI 요소를 최종 변경해주는 함수
+        function applyUI(title, company, logoSrc) {
+            document.getElementById('site-title').innerText = title;
+            document.getElementById('logo-text').innerText = company;
+            if (logoSrc) {
+                document.getElementById('main-logo').src = logoSrc;
+            }
+        }
+    </script>
+</body>
+</html>

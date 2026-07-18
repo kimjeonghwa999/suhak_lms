@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>원장님 시스템 - 프로토타입</title>
+    <!-- 고급 학원 관리 ERP UI를 위한 Tailwind CSS 로드 -->
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- 상단 대시보드 네비게이션 바 -->
+    <header class="bg-white border-b border-slate-100 shadow-sm sticky top-0 z-40">
+        <div class="max-w-7xl w-full mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <img src="https://icons8.com" alt="로고" class="h-8 object-contain">
+                <!-- 💡 메인 대문에서 바꾼 전국 지점명이 원장님 타이틀에도 실시간 연동 -->
+                <span id="sync-manager-brand" class="text-lg font-bold tracking-tight text-slate-700">교육공감수학(주)</span>
+            </div>
+            
+            <!-- 상단 메뉴 관리 탭 (기존 투박한 텍스트 메뉴 리디자인) -->
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-semibold text-slate-500">
+                <button onclick="alert('운영관리 메뉴로 이동')" class="text-blue-600 border-b-2 border-blue-600 pb-4 pt-4 -mb-4">운영관리</button>
+                <button onclick="alert('등록관리 메뉴로 이동')" class="hover:text-slate-800 transition">등록관리</button>
+                <button onclick="alert('학원관리 메뉴로 이동')" class="hover:text-slate-800 transition">학원관리</button>
+            </nav>
+
+            <div class="flex items-center space-x-2">
+                <span class="text-xs bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full font-bold">교육공감수학 원장님</span>
+                <a href="../index.html" class="text-xs text-slate-400 hover:text-slate-600 transition">로그아웃</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 대시보드 콘텐츠 영역 -->
+    <main class="max-w-7xl w-full mx-auto px-6 py-8 flex-1 space-y-6">
+        
+        <!-- 타이틀 바 & 클래스 등록 버튼 -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <h1 class="text-xl font-black text-slate-800 tracking-tight">클래스 관리 리스트</h1>
+                <p class="text-xs text-slate-400 mt-0.5">개설된 반의 기본 정보 및 커리큘럼 현황을 총괄 관리합니다.</p>
+            </div>
+            <button onclick="alert('새로운 클래스 등록 폼을 구성합니다.')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-lg shadow-blue-100 transition active:scale-[0.98]">
+                ➕ 클래스 등록
+            </button>
+        </div>
+
+        <!-- 5연속 검색 필터 조건 조절 바 (기존 상단 셀렉트 박스 레이아웃 대폭 수정) -->
+        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 grid grid-cols-2 md:grid-cols-5 gap-3">
+            <div>
+                <label class="block text-[10px] font-bold text-slate-400 mb-1">운영 상태</label>
+                <select class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs focus:outline-none focus:border-blue-500 font-medium">
+                    <option>전체 상태</option>
+                    <option>운영중</option>
+                    <option>마감</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-[10px] font-bold text-slate-400 mb-1">과정 구분</label>
+                <select class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs focus:outline-none focus:border-blue-500 font-medium">
+                    <option>전과정</option>
+                    <option>초등과정</option>
+                    <option>중등과정</option>
+                    <option>고등과정</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-[10px] font-bold text-slate-400 mb-1">학년 설정</label>
+                <select class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs focus:outline-none focus:border-blue-500 font-medium">
+                    <option>전학년</option>
+                    <option>초등5</option>
+                    <option>중3</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-[10px] font-bold text-slate-400 mb-1">클래스 그룹</label>
+                <select class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs focus:outline-none focus:border-blue-500 font-medium">
+                    <option>전클래스</option>
+                </select>
+            </div>
+            <div class="col-span-2 md:col-span-1">
+                <label class="block text-[10px] font-bold text-slate-400 mb-1">담당 교사</label>
+                <select class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs focus:outline-none focus:border-blue-500 font-medium">
+                    <option>전교사</option>
+                    <option>백승태</option>
+                    <option>박지혜</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 고급화된 마스터 데이터 테이블 영역 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                        <tr class="bg-slate-50 text-slate-500 font-bold border-b border-slate-100">
+                            <th class="p-4 w-12 text-center">No.</th>
+                            <th class="p-4 w-20 text-center">상태</th>
+                            <th class="p-4">클래스명</th>
+                            <th class="p-4">담당교사</th>
+                            <th class="p-4">과정/학년</th>
+                            <th class="p-4">현재 학습과정</th>
+                            <th class="p-4 text-center">수강인원</th>
+                            <th class="p-4">개설기간</th>
+                            <th class="p-4 text-center">관리</th>
+                        </tr>
+                    </thead>
+                    <tbody id="manager-table-body" class="divide-y divide-slate-100 font-medium text-slate-700">
+                        <!-- JS에서 이미지 속 실제 데이터 매핑 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 연동 및 데이터 생성 스크립트 -->
+    <script>
+        // 이미지 속 원본 데이터 그대로 구축
+        const classListData = [
+            { no: 1, status: "운영중", name: "01_초등학교과정", teacher: "백승태", grade: "초등5", course: "[표준18] 초5-1-1.2.3 단원", count: 1, date: "20200302 ~ 20201230" },
+            { no: 2, status: "운영중", name: "02_중학교과정", teacher: "백승태", grade: "중3", course: "[표준18] 중3-1-3.4 단원", count: 1, date: "20200302 ~ 20201230" },
+            { no: 3, status: "운영중", name: "03_고등학교 과정", teacher: "백승태", grade: "미적분1", course: "미적분 / 확률과 통계 [표준18]", count: 1, date: "20200302 ~ 20201230" },
+            { no: 4, status: "운영중", name: "박지혜", teacher: "박지혜", grade: "-", course: "-", count: 0, date: "20200101 ~ 20501231" },
+            { no: 5, status: "운영중", name: "최현서", teacher: "최현서", grade: "-", course: "-", count: 0, date: "20200101 ~ 20501231" },
+            { no: 6, status: "운영중", name: "제선화", teacher: "제선화", grade: "-", course: "-", count: 0, date: "20200101 ~ 20501231" },
+            { no: 7, status: "운영중", name: "이도담", teacher: "서승원", grade: "-", course: "-", count: 0, date: "20200101 ~ 20501231" }
+        ];
+
+        window.onload = function() {
+            // 💡 지점명 동기화 화이트 라벨링 패치
+            const centerName = localStorage.getItem('custom_center_name') || "교육공감수학(주)";
+            document.getElementById('sync-manager-brand').innerText = centerName;
+
+            renderClassList();
+        };
+
+        function renderClassList() {
+            const tbody = document.getElementById('manager-table-body');
+            tbody.innerHTML = '';
+
+            classListData.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50/80 transition";
+                
+                // 인원수가 1명 이상이면 파란색 강조 뱃지, 0명이면 회색
+                const countBadge = item.count > 0 ? 'bg-blue-50 text-blue-600 font-bold' : 'bg-slate-100 text-slate-400';
+
+                tr.innerHTML = `
+                    <td class="p-4 text-center text-slate-400 font-mono">${item.no}</td>
+                    <td class="p-4 text-center"><span class="bg-emerald-50 text-emerald-600 border border-emerald-200 px-2 py-0.5 rounded text-[11px] font-bold">${item.status}</span></td>
+                    <td class="p-4 font-bold text-slate-800">${item.name}</td>
+                    <td class="p-4 text-slate-600">${item.teacher}</td>
+                    <td class="p-4"><span class="bg-slate-100 text-slate-600 px-2 py-0.5 rounded">${item.grade}</span></td>
+                    <td class="p-4 text-slate-500 font-medium">${item.course}</td>
+                    <td class="p-4 text-center"><span class="px-2.5 py-1 rounded-full text-[11px] ${countBadge}">${item.count} 명</span></td>
+                    <td class="p-4 text-slate-400 font-mono tracking-tight">${item.date}</td>
+                    <td class="p-4 text-center">
+                        <button onclick="alert('${item.name} 설정을 수정합니다.')" class="bg-white border border-slate-200 hover:border-blue-500 hover:text-blue-600 text-slate-500 px-2.5 py-1 rounded-lg transition active:scale-95 shadow-sm text-[11px] font-bold">수정</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+    </script>
+</body>
+</html>

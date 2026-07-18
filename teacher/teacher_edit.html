@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강사 정보 수정 - 프로토타입</title>
+    <!-- 세련된 ERP 폼 UI를 위한 Tailwind CSS 로드 -->
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- 상단 대시보드 네비게이션 바 (전체 시스템 표준 통일) -->
+    <header class="bg-white border-b border-slate-100 shadow-sm sticky top-0 z-40">
+        <div class="max-w-4xl w-full mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <img src="https://icons8.com" alt="로고" class="h-8 object-contain">
+                <!-- 💡 메인 대문에서 바꾼 전국 지점명이 강사 수정 창에도 실시간 연동 -->
+                <span id="sync-edit-brand" class="text-lg font-bold tracking-tight text-slate-700">교육공감수학(주)</span>
+            </div>
+            
+            <div class="flex items-center space-x-2">
+                <span class="text-xs bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full font-bold">강사 계정 관리</span>
+                <a href="../index.html" class="text-xs text-slate-400 hover:text-slate-600 transition">로그아웃</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 중앙 정보 수정 폼 섹션 -->
+    <main class="max-w-2xl w-full mx-auto px-4 py-10 flex-1">
+        
+        <!-- 타이틀 바 -->
+        <div class="border-b border-slate-200 pb-4 mb-8">
+            <h1 class="text-xl font-black text-slate-800 tracking-tight">강사관리 수정</h1>
+            <p class="text-xs text-slate-400 mt-0.5">강사의 기본 인적사항 및 보안 비밀번호를 안전하게 변경합니다.</p>
+        </div>
+
+        <!-- 💡 깨진 구식 레이아웃을 칼같이 정렬한 프리미엄 인풋 폼 -->
+        <form class="bg-white border border-slate-150 rounded-2xl shadow-sm p-8 space-y-6" onsubmit="event.preventDefault();">
+            
+            <!-- 1. 아이디 (수정 불가 강조) -->
+            <div class="grid grid-cols-1 sm:grid-cols-4 items-center gap-2 sm:gap-4">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">아이디</label>
+                <div class="sm:col-span-3">
+                    <input type="text" value="msdc01" disabled class="w-full p-3 bg-slate-100 border border-slate-200 rounded-xl text-xs font-bold font-mono text-slate-500 cursor-not-allowed">
+                </div>
+            </div>
+
+            <!-- 2. 현재 비밀번호 -->
+            <div class="grid grid-cols-1 sm:grid-cols-4 items-center gap-2 sm:gap-4">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">현재 비밀번호</label>
+                <div class="sm:col-span-3">
+                    <input type="password" placeholder="현재 비밀번호를 입력하세요" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition text-xs font-medium">
+                </div>
+            </div>
+
+            <!-- 3. 새로운 비밀번호 -->
+            <div class="grid grid-cols-1 sm:grid-cols-4 items-center gap-2 sm:gap-4">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">새로운 비밀번호</label>
+                <div class="sm:col-span-3">
+                    <input type="password" placeholder="변경하실 비밀번호를 입력하세요" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition text-xs font-medium">
+                </div>
+            </div>
+
+            <!-- 4. 새로운 비밀번호 확인 -->
+            <div class="grid grid-cols-1 sm:grid-cols-4 items-center gap-2 sm:gap-4">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">새 비밀번호 확인</label>
+                <div class="sm:col-span-3">
+                    <input type="password" placeholder="변경하실 비밀번호를 한 번 더 입력하세요" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition text-xs font-medium">
+                </div>
+            </div>
+
+            <!-- 5. 이름 -->
+            <div class="grid grid-cols-1 sm:grid-cols-4 items-center gap-2 sm:gap-4">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">이름</label>
+                <div class="sm:col-span-3">
+                    <input type="text" value="교육공감수학" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition text-xs font-bold text-slate-700">
+                </div>
+            </div>
+
+            <!-- 6. 전화번호 (💡 깨져서 아래로 튕겨 나가던 박스를 가로 싱크로율 100% 격자로 결속) -->
+            <div class="grid grid-cols-1 sm:grid-cols-4 items-center gap-2 sm:gap-4">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">전화번호</label>
+                <div class="sm:col-span-3 flex items-center space-x-2">
+                    <input type="text" value="032" class="w-20 p-3 bg-slate-50 border border-slate-200 rounded-xl text-center focus:outline-none focus:border-blue-500 focus:bg-white transition text-xs font-mono font-bold text-slate-700">
+                    <span class="text-slate-300 font-bold">-</span>
+                    <input type="text" value="710" class="w-24 p-3 bg-slate-50 border border-slate-200 rounded-xl text-center focus:outline-none focus:border-blue-500 focus:bg-white transition text-xs font-mono font-bold text-slate-700">
+                    <span class="text-slate-300 font-bold">-</span>
+                    <input type="text" value="7909" class="flex-1 p-3 bg-slate-50 border border-slate-200 rounded-xl text-center focus:outline-none focus:border-blue-500 focus:bg-white transition text-xs font-mono font-bold text-slate-700">
+                </div>
+            </div>
+
+            <!-- 7. 이메일 -->
+            <div class="grid grid-cols-1 sm:grid-cols-4 items-center gap-2 sm:gap-4">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">이메일</label>
+                <div class="sm:col-span-3">
+                    <input type="email" value="jjeonghwa80@naver.com" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition text-xs font-medium font-mono text-slate-700">
+                </div>
+            </div>
+
+            <!-- 하단 액션 버튼 그룹 (구식 사각형 버튼 리디자인) -->
+            <div class="flex space-x-3 pt-6 border-t border-slate-100">
+                <button type="button" onclick="location.href='../manager/manager_main.html'" class="flex-1 bg-white border border-slate-200 hover:bg-slate-50 text-slate-500 p-3.5 font-bold rounded-xl transition text-xs shadow-sm">
+                    ↩️ 리스트 돌아가기
+                </button>
+                <button type="button" onclick="handleUpdateSubmit()" class="flex-1 bg-blue-600 text-white p-3.5 font-bold rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-100 transition text-xs">
+                    💾 정보 수정 완료
+                </button>
+            </div>
+
+        </form>
+    </main>
+
+    <footer class="bg-slate-950 border-t border-slate-900 px-6 py-4 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 gap-2">
+        <span id="footer-brand-title">교육공감수학(주) 통합 교육 인프라 v2.0</span>
+        <span class="font-medium tracking-tight">거의 모든 학생의 성적이 지속적으로 향상됩니다.</span>
+    </footer>
+
+    <script>
+        window.onload = function() {
+            // 💡 전국 지점명 화이트 라벨링 실시간 연동 패치
+            const centerName = localStorage.getItem('custom_center_name') || "교육공감수학(주)";
+            document.getElementById('sync-edit-brand').innerText = centerName;
+            document.getElementById('footer-brand-title').innerText = `${centerName} 통합 교육 인프라 v2.0`;
+        };
+
+        function handleUpdateSubmit() {
+            alert('🎉 정보 변경 완료 프로토타입 시연\n\n강사 사원 정보가 통합 관리 데이터베이스(LMS DB)에 실시간 안전하게 갱신되었습니다.');
+            location.href = '../manager/manager_main.html'; // 수정 후 원장 대시보드로 복귀 모션
+        }
+    </script>
+</body>
+</html>

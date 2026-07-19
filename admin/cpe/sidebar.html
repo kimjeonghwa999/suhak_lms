@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Malgun Gothic', sans-serif; font-size: 12px; }
+        body { background-color: #2a2d33; color: #b8bec5; height: 100vh; display: flex; flex-direction: column; overflow-y: auto; }
+        .profile-box { padding: 15px; border-bottom: 1px solid #3a3f47; text-align: center; }
+        .profile-box .name { color: #fff; font-weight: bold; font-size: 13px; margin-bottom: 5px; }
+        .menu-group-title { padding: 10px 15px; background-color: #22252a; font-weight: bold; color: #fff; }
+        .menu-list { list-style: none; }
+        .menu-list li a { display: block; padding: 9px 20px; color: #a0a6ad; text-decoration: none; }
+        .menu-list li a:hover, .menu-list li.active a { background-color: #373b42; color: #fff; font-weight: bold; }
+        .sidebar-footer { background-color: #1e2024; padding: 10px 15px; border-top: 1px solid #2a2d33; margin-top: auto; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="profile-box">
+        <div class="name">어드민</div>
+        <div style="font-size:10px; color:#8a919a;">● 2026-07-19 21:25:00</div>
+    </div>
+    
+    <div class="menu-group-title">콘텐츠관리(CMS)</div>
+    <ul class="menu-list">
+        <li><a href="#" target="mainFrame">모의고사 원리익힘</a></li>
+        <li><a href="#" target="mainFrame">수능 원리익힘</a></li>
+        <!-- target="mainFrame"을 넣어주면 메인의 콘텐츠 창에 파일이 열립니다 -->
+        <li class="active"><a href="content.html" target="mainFrame">개념원리(CPE)</a></li>
+        <li><a href="#" target="mainFrame">개념원리테스트(CPET)</a></li>
+        <li><a href="#" target="mainFrame">유형진단(DS)</a></li>
+        <li><a href="#" target="mainFrame">유형익힘(PS)</a></li>
+        <li><a href="#" target="mainFrame">필수유형익힘(MUP)</a></li>
+        <li><a href="#" target="mainFrame">연산익힘(AP)</a></li>
+        <li><a href="#" target="mainFrame">유형익힘요소테스트(UETT)</a></li>
+    </ul>
+
+    <div class="sidebar-footer">메뉴관리 ＞</div>
+    <div class="sidebar-footer" style="border-top:none;">사이트관리 ＞</div>
+
+</body>
+</html>

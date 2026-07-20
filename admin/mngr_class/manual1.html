@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>교육공감(주) - 매뉴얼 관리</title>
+    <!-- 분리된 외부 스타일시트 연결 -->
+    <link rel="stylesheet" href="../css/admin/mngr_class_manual1.css">
+</head>
+<body>
+
+    <!-- 메인 GNB 상단 바 -->
+    <header class="gnb-header">
+        <div class="gnb-left">
+            <span class="logo-text">교육공감(주)</span>
+        </div>
+        <ul class="gnb-menu">
+            <li><a href="#">운영관리 ▾</a></li>
+            <li><a href="#">등록관리 ▾</a></li>
+            <li><a href="#">학원관리 ▾</a></li>
+        </ul>
+        <div class="gnb-right">
+            <span class="icon-setting">⚙</span>
+            <span class="user-profile">교육공감수학 원장 ▾</span>
+        </div>
+    </header>
+
+    <!-- 메인 본문 영역 -->
+    <main class="content-container">
+        
+        <!-- 서브 타이틀 구역 + 파일 업로드 영역 추가 -->
+        <div class="sub-title-bar">
+            <div class="title-group">
+                <h1 class="page-title">매뉴얼 <span>매뉴얼</span></h1>
+            </div>
+            <!-- 관리자용 매뉴얼 업로드 단추 추가 -->
+            <div class="upload-group">
+                <input type="file" id="manual-file-input" style="display: none;">
+                <button class="btn-upload" onclick="document.getElementById('manual-file-input').click();">
+                    📤 매뉴얼 파일 업로드
+                </button>
+            </div>
+        </div>
+
+        <!-- 3분할 매뉴얼 카드 레이아웃 -->
+        <div class="manual-grid">
+            
+            <!-- 카드 1: 원장 메뉴얼 -->
+            <div class="manual-card">
+                <div class="card-header">원장 매뉴얼</div>
+                <div class="card-body">
+                    <div class="brand-sub">메가수학</div>
+                    <h2 class="guide-title">메가수학 기본사용 퀵가이드</h2>
+                    <p class="guide-target">원장 / 상담실장편</p>
+                    <div class="logo-placeholder">M</div>
+                    <p class="quote">"시작하기 전에"</p>
+                    <p class="description">메가수학 사용에 가장 기본이 되는 기능들만 모았습니다. 각 기능별 목표를 확인하고, 기능의 위치와 진행 순서를 프레임워크 순서대로 차근차근 쉽게 사용할 수 있습니다.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn-download">다운로드</a>
+                </div>
+            </div>
+
+            <!-- 카드 2: 교사 메뉴얼 -->
+            <div class="manual-card">
+                <div class="card-header">교사 매뉴얼</div>
+                <div class="card-body">
+                    <div class="brand-sub">메가수학</div>
+                    <h2 class="guide-title">메가수학 기본사용 퀵가이드</h2>
+                    <p class="guide-target">선생님편</p>
+                    <div class="logo-placeholder">M</div>
+                    <p class="quote">"시작하기 전에"</p>
+                    <p class="description">메가수학 사용에 가장 기본이 되는 기능들만 모았습니다. 각 기능별 목표를 확인하고, 기능의 위치와 진행 순서를 프레임워크 순서대로 차근차근 쉽게 사용할 수 있습니다.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn-download">다운로드</a>
+                </div>
+            </div>
+
+            <!-- 카드 3: 학생 메뉴얼 -->
+            <div class="manual-card">
+                <div class="card-header">학생 매뉴얼</div>
+                <div class="card-body">
+                    <div class="brand-sub">메가수학</div>
+                    <h2 class="guide-title">메가수학 학습 퀵가이드</h2>
+                    <p class="guide-target">학생편</p>
+                    <div class="logo-placeholder">M</div>
+                    <p class="quote">"시작하기 전에"</p>
+                    <p class="description">메가수학 사용에 가장 기본이 되는 기능들만 모았습니다. 각 기능별 목표를 확인하고, 기능의 위치와 진행 순서를 프레임워크 순서대로 차근차근 쉽게 사용할 수 있습니다.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn-download">다운로드</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 하단 카피라이트 영역 -->
+    <footer class="footer-bottom">
+        Copyright © 교육공감(주) 2024
+    </footer>
+
+</body>
+</html>

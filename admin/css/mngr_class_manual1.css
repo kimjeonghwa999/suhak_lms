@@ -1,0 +1,197 @@
+/* 기본 스타일 초기화 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Malgun Gothic', dotum, sans-serif;
+}
+html, body {
+    height: 100%;
+}
+body {
+    background-color: #f7f9fc;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 최상단 메인 네비게이션 GNB */
+.gnb-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff;
+    padding: 0 20px;
+    height: 55px;
+    border-bottom: 1px solid #e2e8f0;
+}
+.logo-text {
+    font-size: 15px;
+    font-weight: bold;
+    color: #1e293b;
+}
+.gnb-menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 5px;
+}
+.gnb-menu li a {
+    display: block;
+    padding: 0 15px;
+    height: 55px;
+    line-height: 55px;
+    text-decoration: none;
+    color: #475569;
+    font-size: 14px;
+}
+.gnb-menu li a:hover {
+    color: #0284c7;
+    background-color: #f8fafc;
+}
+.gnb-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 13px;
+}
+.icon-setting {
+    color: #64748b;
+    cursor: pointer;
+}
+.user-profile {
+    font-weight: bold;
+    color: #334155;
+}
+
+/* 메인 콘텐츠 구조 */
+.content-container {
+    padding: 15px;
+    flex: 1;
+}
+
+/* 서브 타이틀 바 + 업로드 제어 정렬 공간 */
+.sub-title-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #cbd5e1;
+    padding-bottom: 6px;
+    margin-bottom: 15px;
+}
+.page-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #334155;
+}
+.page-title span {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: normal;
+    margin-left: 6px;
+}
+
+/* 새롭게 추가된 관리자 업로드 기능 버튼 */
+.btn-upload {
+    background-color: #0284c7;
+    color: #ffffff;
+    border: none;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.btn-upload:hover {
+    background-color: #0369a1;
+}
+
+/* 3분할 카드리스트 배치 그리드 */
+.manual-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+.manual-card {
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+.card-header {
+    background-color: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 10px;
+    font-size: 13px;
+    color: #475569;
+}
+.card-body {
+    padding: 30px 20px;
+    flex: 1;
+}
+.brand-sub {
+    font-size: 12px;
+    color: #0284c7;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.guide-title {
+    font-size: 20px;
+    color: #475569;
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+.guide-target {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+/* 로고가 들어가는 임시 중앙 영역 */
+.logo-placeholder {
+    font-size: 55px;
+    font-weight: 900;
+    color: #0284c7;
+    font-style: italic;
+    margin-bottom: 25px;
+}
+.quote {
+    font-size: 13px;
+    font-weight: bold;
+    color: #334155;
+    margin-bottom: 10px;
+}
+.description {
+    font-size: 11px;
+    color: #94a3b8;
+    line-height: 1.6;
+    padding: 0 15px;
+}
+
+/* 카드 하단 다운로드 영역 */
+.card-footer {
+    border-top: 1px solid #f1f5f9;
+    padding: 15px;
+}
+.btn-download {
+    display: inline-block;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 12px;
+}
+.btn-download:hover {
+    color: #475569;
+    text-decoration: underline;
+}
+
+/* 하단 카피라이트 고정바 */
+.footer-bottom {
+    background-color: #334155;
+    color: #ffffff;
+    font-size: 11px;
+    padding: 10px 20px;
+}

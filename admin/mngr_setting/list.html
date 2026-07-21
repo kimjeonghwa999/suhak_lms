@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>교육 지원 시스템 - 클래스 관리</title>
+    <title>교육공감(주) - 클래스관리 리스트</title>
     <link rel="stylesheet" href="../css/mngr_list.css">
     <style>
-        /* 상단 네비게이션용 스타일 가볍게 추가 */
         .gnb-header { background: #ffffff; display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; border-bottom: 1px solid #e1e4e8; margin-bottom: 15px; }
         .gnb-left { display: flex; align-items: center; gap: 20px; }
         .logo-text { font-size: 16px; font-weight: bold; color: #2c3e50; }
@@ -16,7 +15,6 @@
 </head>
 <body>
 
-    <!-- 💡 설정 페이지의 데이터와 실시간 연동되는 범용 헤더 바 -->
     <header class="gnb-header">
         <div class="gnb-left">
             <span class="logo-text" id="topLogoText">수학교육 지원시스템</span>
@@ -43,7 +41,6 @@
         <button class="btn-register" onclick="openModal()">클래스 등록</button>
     </div>
 
-    <!-- 클래스 목록 테이블 -->
     <table class="class-table">
         <thead>
             <tr>
@@ -68,14 +65,14 @@
                 <td>초등5</td>
                 <td>[공익지원] 초5 기초 연산 단원</td>
                 <td class="text-center">1</td>
-                <td data-period="20260302 ~ 20261230">20260302 ~ 20261230</td>
+                <td data-period="2026-03-02 ~ 2026-12-30">2026-03-02 ~ 2026-12-30</td>
                 <td class="text-center"><span class="link-action" onclick="openEditModal('row-1')">수정</span></td>
                 <td class="text-center"><span class="link-action">+</span></td>
             </tr>
         </tbody>
     </table>
 
-    <!-- 등록 / 수정 겸용 모달 팝업 구조 -->
+    <!-- 모달 팝업 구조 -->
     <div class="modal-overlay" id="classModal">
         <div class="modal-box">
             <div class="modal-header">
@@ -93,8 +90,9 @@
                         <tr>
                             <th>운영기간</th>
                             <td>
-                                <input type="text" id="modalStartDate" class="input-date" placeholder="0000-00-00"> ~ 
-                                <input type="text" id="modalEndDate" class="input-date" placeholder="0000-00-00">
+                                <!-- 🛠️ 기존 일반 인풋에서 '달력 선택형(type="date")'으로 정밀 변경 완료 -->
+                                <input type="date" id="modalStartDate" class="input-date" required> ~ 
+                                <input type="date" id="modalEndDate" class="input-date" required>
                             </td>
                         </tr>
                         <tr>
@@ -127,16 +125,11 @@
     </div>
 
     <script>
-        // 💡 동적 브리징: 환경설정에서 원장님이 지정한 로고명과 기관명을 상단 바에 자동 동기화
         window.onload = function() {
             const savedTopName = localStorage.getItem('topName');
             const savedAcademyName = localStorage.getItem('academyName');
-            if(savedTopName) {
-                document.getElementById('topLogoText').innerText = savedTopName;
-            }
-            if(savedAcademyName) {
-                document.getElementById('listSubTitle').innerText = `${savedAcademyName} - 클래스 관리 목록`;
-            }
+            if(savedTopName) document.getElementById('topLogoText').innerText = savedTopName;
+            if(savedAcademyName) document.getElementById('listSubTitle').innerText = `${savedAcademyName} - 클래스 관리 목록`;
         }
 
         function openRegisterModal() {
@@ -157,6 +150,8 @@
 
             document.getElementById('editingRowId').value = rowId;
             document.getElementById('modalClassName').value = className;
+            
+            // 💡 날짜 선택 규격(YYYY-MM-DD)에 맞춤 동기화
             document.getElementById('modalStartDate').value = dates[0] || "";
             document.getElementById('modalEndDate').value = dates[1] || "";
             document.getElementById('modalTeacher').value = teacher;
@@ -172,20 +167,24 @@
         function saveModalData(event) {
             event.preventDefault();
             const rowId = document.getElementById('editingRowId').value;
+            const className = document.getElementById('modalClassName').value;
+            const startDate = document.getElementById('modalStartDate').value;
+            const endDate = document.getElementById('modalEndDate').value;
+            const teacher = document.getElementById('modalTeacher').value;
+            const status = document.getElementById('modalStatus').value;
+
             if (rowId) {
                 const row = document.getElementById(rowId);
-                row.querySelector('[data-classname]').innerText = document.getElementById('modalClassName').value;
-                row.querySelector('[data-teacher]').innerText = document.getElementById('modalTeacher').value;
-                row.querySelector('[data-status]').innerText = document.getElementById('modalStatus').value;
-                row.querySelector('[data-period]').innerText = `${document.getElementById('modalStartDate').value} ~ ${document.getElementById('modalEndDate').value}`;
+                row.querySelector('[data-classname]').innerText = className;
+                row.querySelector('[data-teacher]').innerText = teacher;
+                row.querySelector('[data-status]').innerText = status;
+                row.querySelector('[data-period]').innerText = `${startDate} ~ ${endDate}`;
                 alert("💾 교육 클래스 정보가 정상적으로 수정되었습니다.");
             } else {
                 alert("🎉 신규 수학교육 지원 클래스가 목록에 개설되었습니다!");
             }
             closeModal();
         }
-        
-        // 버튼 래핑 함수
         function openModal() { openRegisterModal(); }
     </script>
 </body>

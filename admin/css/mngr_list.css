@@ -330,3 +330,18 @@ body {
     background: #f8f9fa; 
     border-color: #adadad;
 }
+
+/* 각 입력창별 원본 크기 맞춤 지정 (날짜 인풋 스타일 튜닝) */
+.input-classname { 
+    width: 200px; 
+}
+.input-date { 
+    width: 145px; 
+    text-align: center; 
+    font-family: inherit; /* 시스템 폰트 상속 */
+    cursor: pointer;
+}
+.select-teacher, 
+.select-status { 
+    width: 120px; 
+}

@@ -7,17 +7,27 @@
     <style>
         body { font-family: 'Malgun Gothic', sans-serif; background-color: #f4f6f9; margin: 0; padding: 40px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; }
         .register-container { background: #ffffff; width: 100%; max-width: 600px; padding: 40px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
-        h2 { color: #2c3e50; text-align: center; margin-top: 0; margin-bottom: 30px; font-size: 24px; border-bottom: 2px solid #e9ecef; padding-bottom: 15px; }
+        h2 { color: #1e2d42; text-align: center; margin-top: 0; margin-bottom: 30px; font-size: 24px; border-bottom: 2px solid #e9ecef; padding-bottom: 15px; }
         .form-group { margin-bottom: 20px; }
         label { display: block; font-weight: bold; margin-bottom: 8px; color: #495057; font-size: 14px; }
         input[type="text"], input[type="tel"], select { width: 100%; padding: 12px; border: 1px solid #ced4da; border-radius: 6px; font-size: 15px; transition: border-color 0.2s; box-sizing: border-box; }
-        input:focus, select:focus { border-color: #34495e; outline: none; box-shadow: 0 0 0 3px rgba(52, 73, 94, 0.1); }
+        input:focus, select:focus { border-color: #1e2d42; outline: none; box-shadow: 0 0 0 3px rgba(30, 45, 66, 0.1); }
         .row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .btn-submit { width: 100%; background-color: #2c3e50; color: white; padding: 14px; font-size: 16px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-top: 20px; transition: background-color 0.2s; }
-        .btn-submit:hover { background-color: #1a252f; }
+        
+        /* 🛠️ 현재 디자인에 딱 맞춘 주소 검색 영역 스타일 */
+        .address-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .btn-search-addr { background-color: #2c3e50; color: white; border: none; padding: 0 20px; border-radius: 6px; font-weight: bold; cursor: pointer; white-space: nowrap; font-size: 14px; transition: background 0.2s; }
+        .btn-search-addr:hover { background-color: #1a252f; }
+        .readonly-bg { background-color: #fafafa; cursor: not-allowed; }
+
+        .btn-submit { width: 100%; background-color: #1e2d42; color: white; padding: 14px; font-size: 16px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-top: 20px; transition: background-color 0.2s; }
+        .btn-submit:hover { background-color: #111a26; }
         .btn-back { display: block; text-align: center; margin-top: 15px; color: #6c757d; text-decoration: none; font-size: 14px; }
         .btn-back:hover { text-decoration: underline; }
     </style>
+    
+    <!-- 🔗 Daum 카카오 우편번호 서비스 라이브러리 탑재 -->
+    <script src="https://daumcdn.net"></script>
 </head>
 <body>
 
@@ -55,32 +65,53 @@
                 <input type="text" id="businessNumber" placeholder="000-00-00000">
             </div>
 
+            <!-- 🛠️ 깔끔하게 녹아든 카카오 주소 검색 레이아웃 -->
             <div class="form-group">
-                <label for="academyAddress">학원 주소</label>
-                <input type="text" id="academyAddress" placeholder="도로명 주소 또는 지번 주소 입력">
+                <label>학원 주소</label>
+                <div class="address-row">
+                    <input type="text" id="postcode" placeholder="우편번호" class="readonly-bg" readonly style="max-width: 150px;">
+                    <button type="button" class="btn-search-addr" onclick="execDaumPostcode()">주소 검색</button>
+                </div>
+                <input type="text" id="academyAddress" placeholder="기본 주소 (검색 시 자동 입력)" class="readonly-bg" readonly style="margin-bottom: 10px;">
+                <input type="text" id="detailAddress" placeholder="상세 주소를 입력하세요 (예: 3층 301호)">
             </div>
 
             <button type="submit" class="btn-submit">새로운 학원 등록하기</button>
         </form>
 
-        <!-- 🔗 같은 폴더 내 list.html로 바로 이동하도록 수정 완료 -->
         <a href="list.html" class="btn-back">← 학원 목록 페이지로 돌아가기</a>
     </div>
 
     <script>
+        function execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    let addr = '';
+                    if (data.userSelectedType === 'R') {
+                        addr = data.roadAddress;
+                    } else {
+                        addr = data.jibunAddress;
+                    }
+                    // 주소창 값 매칭
+                    document.getElementById('postcode').value = data.zonecode;
+                    document.getElementById('academyAddress').value = addr;
+                    document.getElementById('detailAddress').focus();
+                }
+            }).open();
+        }
+
         function handleRegister(event) {
             event.preventDefault();
-
             const academyData = {
                 name: document.getElementById('academyName').value,
                 owner: document.getElementById('ownerName').value,
                 type: document.getElementById('academyType').value,
                 phone: document.getElementById('academyPhone').value,
                 businessNum: document.getElementById('businessNumber').value,
-                address: document.getElementById('academyAddress').value
+                address: document.getElementById('academyAddress').value,
+                detail: document.getElementById('detailAddress').value
             };
-
-            alert(`🎉 [${academyData.name}] 학원이 성공적으로 등록되었습니다!\n원장명: ${academyData.owner}`);
+            alert(`🎉 [${academyData.name}] 학원이 가맹 시스템에 등록되었습니다!`);
             document.getElementById('registerForm').reset();
         }
     </script>

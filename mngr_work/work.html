@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학원 관리 시스템 - 교사근태관리</title>
+    <!-- 공통 스타일시트 연결 -->
+    <link rel="stylesheet" href="../../css/mngr_setting.css">
+    <style>
+        .gps-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; text-align: center; }
+        .gps-status { font-size: 18px; font-weight: bold; margin: 15px 0; padding: 10px; border-radius: 6px; }
+        .status-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .status-fail { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .status-loading { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        
+        .action-btns { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
+        .btn-work { padding: 15px 40px; font-size: 18px; font-weight: bold; color: white; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+        .btn-on { background-color: #2ecc71; }
+        .btn-on:hover:not(:disabled) { background-color: #27ae60; }
+        .btn-off { background-color: #e74c3c; }
+        .btn-off:hover:not(:disabled) { background-color: #c0392b; }
+        
+        /* 버튼 비활성화 스타일 (학원 밖일 때) */
+        .btn-work:disabled { background-color: #ced4da; color: #6c757d; cursor: not-allowed; transform: none; box-shadow: none; }
+        
+        .distance-info { font-size: 15px; color: #495057; margin-bottom: 5px; }
+        .badge-limit { background: #2c3e50; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+    <!-- 상단 GNB 바 -->
+    <header class="gnb-header">
+        <div class="gnb-left">
+            <span class="logo-text" id="topLogoText">교육공감(주)</span>
+            <ul class="gnb-menu">
+                <li><a href="#">운영관리 ▾</a></li>
+                <li><a href="../mngr_setting/register.html">등록관리 ▾</a></li>
+                <li><a href="../mngr_class/list1.html">학원 관리 ▾</a></li>
+                <li><a href="../mngr_attendance/attendance.html" style="color: #e67e22;">⏱️ 학생출석관리</a></li>
+                <li><a href="work.html" style="color: #27ae60;">📅 교사근태관리</a></li>
+            </ul>
+        </div>
+        <div>
+            <a href="../mngr_setting/setting.html" class="gnb-right-link">⚙️ 시스템 설정 마스터 ▾</a>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- 좌측 서브 메뉴 바 -->
+        <nav class="sidebar">
+            <div class="sidebar-title">근태 관리</div>
+            <ul class="sidebar-menu">
+                <li class="active"><a href="work.html">📅 출퇴근 체크 (GPS)</a></li>
+                <li><a href="#">📋 월별 근무 내역</a></li>
+                <li><a href="../mngr_setting/setting.html">⚙️ 기본 정보 설정</a></li>
+            </ul>
+        </nav>
+
+        <!-- 우측 컨텐츠 영역 -->
+        <main class="content">
+            <div class="page-title">📅 선생님 GPS 출퇴근 인증 시스템</div>
+
+            <!-- GPS 출퇴근 카드인증 섹션 -->
+            <div class="gps-card">
+                <h3>📍 현재 위치 기반 출퇴근 인증</h3>
+                <p class="distance-info">🏢 지정 학원 위치: <strong>서울 마포구 독막로 학원가</strong></p>
+                <p class="distance-info">📏 제한 반경 허용 기준: <span class="badge-limit">150m 이내</span></p>
+                
+                <!-- 실시간 상태 알림판 -->
+                <div id="gpsStatusBox" class="gps-status status-loading">
+                    🔄 실시간 선생님의 GPS 위치를 측정하고 있습니다...
+                </div>
+                
+                <p id="distanceResult" style="font-weight: bold; font-size: 14px; color: #555;"></p>
+
+                <!-- 출퇴근 버튼 (기본 비활성화상태 ➔ GPS 검증 후 조건부 활성화) -->
+                <div class="action-btns">
+                    <button id="btnOn" class="btn-work btn-on" onclick="recordWork('출근')" disabled>출근하기</button>
+                    <button id="btnOff" class="btn-work btn-off" onclick="recordWork('퇴근')" disabled>퇴근하기</button>
+                </div>
+            </div>
+
+            <!-- 근태 기록 테이블 -->
+            <h3>📋 오늘의 출퇴근 인증 로그</h3>
+            <table class="setting-table" style="background: white;">
+                <thead>
+                    <tr style="background-color: #2c3e50; color: white;">
+                        <th style="color: white; text-align: center; width: 80px;">구분</th>
+                        <th style="color: white; text-align: center;">인증 시간</th>
+                        <th style="color: white; text-align: center;">인증 오차 반경</th>
+                        <th style="color: white; text-align: center;">상태</th>
+                    </tr>
+                </thead>
+                <tbody id="workLogBody">
+                    <tr id="emptyRow"><td colspan="4" style="text-align: center; color: #999;">인증 내역이 없습니다. 학원 반경 내에서 출퇴근을 체크하세요.</td></tr>
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <script>
+        // 1. 기준이 되는 학원의 위도(Latitude)와 경도(Longitude) 설정 
+        // (예시 좌표: 마포구 대흥역 학원가 인근 / 위도: 37.5475, 경도: 126.9421)
+        const ACADEMY_LAT = 37.5475; 
+        const ACADEMY_LON = 126.9421;
+        const ALLOWED_DISTANCE = 150; // 출퇴근 제한 반경 (150미터)
+
+        // 2. 하버스인(Haversine) 공식을 이용한 두 좌표 간의 거리 계산 함수 (단위: 미터)
+        function getDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371e3; // 지구 반경 (미터)
+            const phi1 = lat1 * Math.PI / 180;
+            const phi2 = lat2 * Math.PI / 180;
+            const deltaPhi = (lat2 - lat1) * Math.PI / 180;
+            const deltaLambda = (lon2 - lon1) * Math.PI / 180;
+
+            const a = Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
+                      Math.cos(phi1) * Math.cos(phi2) *
+                      Math.sin(deltaLambda / 2) * Math.sin(deltaLambda / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(2 - a));
+
+            return R * c; // 최종 거리 (m)
+        }
+
+        // 3. 브라우저 GPS 센서 가동 및 실시간 위치 추적
+        if (navigator.geolocation) {
+            // 주기가 바뀔 때마다 감시(watchPosition) 또는 1회성 가져오기(getCurrentPosition)
+            navigator.geolocation.watchPosition(checkLocation, handleError, {
+                enableHighAccuracy: true, // 고정밀 GPS 가동 요청
+                maximumAge: 0,
+                timeout: 5000
+            });
+        } else {
+            document.getElementById('gpsStatusBox').className = "gps-status status-fail";
+            document.getElementById('gpsStatusBox').innerText = "❌ 기기가 GPS 위치 정보를 지원하지 않습니다.";
+        }
+
+        let currentDistance = 0;
+
+        // 4. 위치 측정 성공 시 제한 조건 체크 및 버튼 토글 처리
+        function checkLocation(position) {
+            const userLat = position.coords.latitude;
+            const userLon = position.coords.longitude;
+
+            // 학원과 선생님의 실제 거리 계산
+            currentDistance = getDistance(ACADEMY_LAT, ACADEMY_LON, userLat, userLon);
+            
+            const statusBox = document.getElementById('gpsStatusBox');
+            const distResult = document.getElementById('distanceResult');
+            const btnOn = document.getElementById('btnOn');
+            const btnOff = document.getElementById('btnOff');
+
+            distResult.innerText = `현재 학원과의 거리: 약 ${Math.round(currentDistance)}m`;
+
+            // 🔥 150m 이내에 들어왔을 때만 출퇴근 오픈
+            if (currentDistance <= ALLOWED_DISTANCE) {
+                statusBox.className = "gps-status status-success";
+                statusBox.innerText = "⭕ 인증 성공: 학원 반경 내에 있습니다. 출퇴근이 가능합니다.";
+                btnOn.disabled = false;
+                btnOff.disabled = false;
+            } else {
+                statusBox.className = "gps-status status-fail";
+                statusBox.innerText = `❌ 인증 실패: 학원 밖입니다 (허용 오차범위 150m 초과)`;
+                btnOn.disabled = true;
+                btnOff.disabled = true;
+            }
+        }
+
+        // GPS 에러 핸들링
+        function handleError(error) {
+            const statusBox = document.getElementById('gpsStatusBox');
+            statusBox.className = "gps-status status-fail";
+            if(error.code === 1) {
+                statusBox.innerText = "❌ 위치 정보 권한을 거부하셨습니다. 브라우저 설정에서 위치 권한을 허용해 주세요.";
+            } else {
+                statusBox.innerText = "❌ GPS 신호가 잡히지 않습니다. 야외나 창가 쪽에서 다시 시도해 주세요.";
+            }
+        }
+
+        // 5. 출퇴근 버튼 누를 시 가상 데이터 로그 기록 함수
+        function recordWork(type) {
+            const now = new Date();
+            const timeStr = `${now.getHours()}시 ${now.getMinutes()}분 ${now.getSeconds()}초`;
+            const logBody = document.getElementById('workLogBody');
+            
+            // 초기 빈 행 제거
+            const emptyRow = document.getElementById('emptyRow');
+            if (emptyRow) emptyRow.remove();
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td style="text-align: center;"><strong>${type}</strong></td>
+                <td style="text-align: center;">${timeStr}</td>
+                <td style="text-align: center;">학원으로부터 ${Math.round(currentDistance)}m 지점</td>
+                <td style="text-align: center; color: green; font-weight: bold;">정상 처리</td>
+            `;
+            logBody.appendChild(row);
+            alert(`🔔 ${type} 처리가 완료되었습니다! 오늘도 수고하셨습니다.`);
+        }
+    </script>
+
+</body>
+</html>

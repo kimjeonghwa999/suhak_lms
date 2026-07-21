@@ -4,75 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>수학 학습 시스템 - 학생 강의실</title>
-    <!-- 🔗 🔥 admin 폴더 밖으로 격리 분리된 사용자 전용 스타일시트 호출 경로 정밀 교정 완료 -->
+    <!-- 기존 스타일시트 연결 유지 -->
     <link rel="stylesheet" href="../css/user_style.css">
+    <!-- 💡 새로 분리한 외뷰 레이아웃 CSS 연결 (경로를 파일 위치에 맞게 조절하세요) -->
+    <link rel="stylesheet" href="./classroom_layout.css">
 </head>
 <body>
 
-    <!-- 상단 클래스 선택 바 -->
+    <!-- 상단: 클래스 선택 바 -->
     <div class="class-selector-bar">
         <span class="class-label">나의 클래스</span>
         <select class="select-class-dropdown" id="studentClassSelect" onchange="loadTeacherCurriculum()">
             <option value="high3" selected>03_고등학교 과정</option>
-            <option value="mid3">02_중학교 과정</option>
+            <option value="mid2">02_중학교 과정</option>
             <option value="elem5">01_초등학교 과정</option>
+            <option value="empty">배정 없는 테스트 반</option>
         </select>
     </div>
 
-    <!-- 대시보드 박스 -->
-    <div class="classroom-container">
-        
-        <!-- 교재 헤더 타이틀 바 -->
-        <div class="textbook-header">
-            <div class="textbook-title" id="studentTextbookTitle">배정된 수학 교재가 없습니다.</div>
-            <div class="tab-switch-box">
-                <button class="tab-btn">학생</button>
-                <button class="tab-btn active">클래스</button>
+    <!-- 메인 콘텐츠 영역 -->
+    <div class="main-container">
+        <div class="classroom-card">
+            <!-- 카드 헤더 (교재명 및 탭 버튼) -->
+            <div class="card-header">
+                <div class="book-title" id="displayBookName">로딩 중...</div>
+                <div class="tab-buttons">
+                    <button class="tab-btn">학생</button>
+                    <button class="tab-btn active">클래스</button>
+                </div>
+            </div>
+            
+            <!-- 카드 본문 (데이터가 동적으로 주입되는 곳) -->
+            <div class="card-body" id="content-area">
+                <!-- 기본 로딩 상태 표시 -->
+                <div class="alert-box">데이터를 불러오는 중입니다...</div>
             </div>
         </div>
-
-        <!-- 선생님이 입력한 목차가 회색 리스트 띠 형태로 출력되는 컨테이너 -->
-        <div class="chapter-wrapper" id="studentChapterContainer"></div>
-
     </div>
 
+    <!-- 자바스크립트 비즈니스 로직 -->
     <script>
         function loadTeacherCurriculum() {
-            const selectedClassCode = document.getElementById('studentClassSelect').value;
-            const container = document.getElementById('studentChapterContainer');
-            const titleElement = document.getElementById('studentTextbookTitle');
+            const selectEl = document.getElementById("studentClassSelect");
+            const selectedClass = selectEl.value;
             
-            // 공용 가상 DB에서 데이터 긁어오기
-            const db = JSON.parse(localStorage.getItem('sharedClassDB')) || [];
-            const matchedClass = db.find(item => item.classCode === selectedClassCode);
-            
-            container.innerHTML = ""; 
+            const contentArea = document.getElementById("content-area");
+            const displayBookName = document.getElementById("displayBookName");
 
-            if (matchedClass) {
-                titleElement.innerText = matchedClass.textbook;
-                
-                if (matchedClass.chapters && matchedClass.chapters.length > 0) {
-                    matchedClass.chapters.forEach(chapterName => {
-                        const row = document.createElement('div');
-                        row.className = "chapter-row";
-                        row.innerHTML = `
-                            <span>${chapterName}</span>
-                            <button class="print-icon-btn" onclick="alert('✍️ [${chapterName}]의 오답노트 자습방을 시작합니다.')">🖨️</button>
+            fetch('../mock_data.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("JSON 파일을 찾을 수 없습니다.");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const classData = data[selectedClass];
+
+                    if (classData && classData.chapters && classData.chapters.length > 0) {
+                        displayBookName.innerText = classData.bookName;
+
+                        let listHtml = '<ul class="chapter-list">';
+                        classData.chapters.forEach(chapter => {
+                            listHtml += `
+                                <li class="chapter-item">
+                                    <span>${chapter}</span>
+                                    <span class="lock-icon">🔒</span>
+                                </li>
+                            `;
+                        });
+                        listHtml += '</ul>';
+
+                        contentArea.innerHTML = listHtml;
+                    } else {
+                        displayBookName.innerText = "배정된 교재 없음";
+                        contentArea.innerHTML = `
+                            <div class="alert-box">
+                                ⚠️ 선생님이 아직 이 클래스에 수학 교재 및 학습 목차를 입력하지 않았습니다.
+                            </div>
                         `;
-                        container.appendChild(row);
-                    });
-                } else {
-                    container.innerHTML = "<div style='text-align:center; padding:30px; color:#999; font-size:14px;'>교재는 배정되었으나, 상세 세부 단원 목차가 비어 있습니다.</div>";
-                }
-            } else {
-                titleElement.innerText = "배정된 교재 없음";
-                container.innerHTML = `<div style='text-align:center; padding:40px; color:#e74c3c; font-size:14px; font-weight:bold;'>⚠️ 선생님이 아직 이 클래스에 수학 교재 및 학습 목차를 입력하지 않았습니다.</div>`;
-            }
+                    }
+                })
+                .catch(error => {
+                    console.error("데이터 로드 실패:", error);
+                    displayBookName.innerText = "오류 발생";
+                    contentArea.innerHTML = `
+                        <div class="alert-box" style="color: red;">
+                            데이터 원격 연동 중 오류가 발생했습니다.<br>
+                            루트 경로에 mock_data.json 파일이 있는지 확인해 주세요.
+                        </div>
+                    `;
+                });
         }
 
-        window.onload = function() {
-            loadTeacherCurriculum(); 
-        }
+        document.addEventListener("DOMContentLoaded", loadTeacherCurriculum);
     </script>
 </body>
 </html>

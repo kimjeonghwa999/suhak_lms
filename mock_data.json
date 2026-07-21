@@ -1,0 +1,24 @@
+{
+  "high3": {
+    "bookName": "[표준22] 공통수학 1",
+    "chapters": [
+      "Chapter 1. 다항식",
+      "Chapter 2. 방정식과 부등식",
+      "Chapter 3. 경우의 수",
+      "Chapter 4. 행렬"
+    ]
+  },
+  "mid2": {
+    "bookName": "[중등] 수학 2-1",
+    "chapters": [
+      "Chapter 1. 유리수와 순환소수",
+      "Chapter 2. 식의 계산"
+    ]
+  },
+  "elem5": {
+    "bookName": "[초등] 수학 5-1",
+    "chapters": [
+      "Chapter 1. 자연수의 혼합 계산"
+    ]
+  }
+}

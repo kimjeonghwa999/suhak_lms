@@ -1,0 +1,82 @@
+/* admin/css/mngr_work.css */
+
+/* 📍 근태관리 전용 카드 UI 및 상태 배너 스타일 */
+.gps-card { 
+    background: white; 
+    padding: 25px; 
+    border-radius: 12px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+    margin-bottom: 25px; 
+    text-align: center; 
+}
+.gps-status { 
+    font-size: 18px; 
+    font-weight: bold; 
+    margin: 15px 0; 
+    padding: 10px; 
+    border-radius: 6px; 
+}
+.status-success { 
+    background-color: #d4edda; 
+    color: #155724; 
+    border: 1px solid #c3e6cb; 
+}
+.status-fail { 
+    background-color: #f8d7da; 
+    color: #721c24; 
+    border: 1px solid #f5c6cb; 
+}
+.status-loading { 
+    background-color: #fff3cd; 
+    color: #856404; 
+    border: 1px solid #ffeeba; 
+}
+
+/* 출퇴근 액션 버튼 스타일 */
+.action-btns { 
+    display: flex; 
+    justify-content: center; 
+    gap: 20px; 
+    margin-top: 20px; 
+}
+.btn-work { 
+    padding: 15px 40px; 
+    font-size: 18px; 
+    font-weight: bold; 
+    color: white; 
+    border: none; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    transition: all 0.2s; 
+}
+.btn-on { 
+    background-color: #2ecc71; 
+}
+.btn-on:hover:not(:disabled) { 
+    background-color: #27ae60; 
+}
+.btn-off { 
+    background-color: #e74c3c; 
+}
+.btn-off:hover:not(:disabled) { 
+    background-color: #c0392b; 
+}
+
+/* 버튼 비활성화 상태 (범위 밖일 때) */
+.btn-work:disabled { 
+    background-color: #ced4da; 
+    color: #6c757d; 
+    cursor: not-allowed; 
+}
+.distance-info { 
+    font-size: 15px; 
+    color: #495057; 
+    margin-bottom: 5px; 
+}
+.badge-limit { 
+    background: #2c3e50; 
+    color: white; 
+    padding: 2px 6px; 
+    border-radius: 4px; 
+    font-size: 12px; 
+}

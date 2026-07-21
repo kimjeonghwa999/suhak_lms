@@ -1,0 +1,117 @@
+/* admin/css/mngr_register.css */
+
+body { 
+    font-family: 'Malgun Gothic', sans-serif; 
+    background-color: #f4f6f9; 
+    margin: 0; 
+    padding: 40px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 100vh; 
+    box-sizing: border-box; 
+}
+.register-container { 
+    background: #ffffff; 
+    width: 100%; 
+    max-width: 600px; 
+    padding: 40px; 
+    border-radius: 12px; 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08); 
+}
+h2 { 
+    color: #1e2d42; 
+    text-align: center; 
+    margin-top: 0; 
+    margin-bottom: 30px; 
+    font-size: 24px; 
+    border-bottom: 2px solid #e9ecef; 
+    padding-bottom: 15px; 
+}
+.form-group { 
+    margin-bottom: 20px; 
+}
+label { 
+    display: block; 
+    font-weight: bold; 
+    margin-bottom: 8px; 
+    color: #495057; 
+    font-size: 14px; 
+}
+input[type="text"], 
+input[type="tel"], 
+select { 
+    width: 100%; 
+    padding: 12px; 
+    border: 1px solid #ced4da; 
+    border-radius: 6px; 
+    font-size: 15px; 
+    transition: border-color 0.2s; 
+    box-sizing: border-box; 
+}
+input:focus, 
+select:focus { 
+    border-color: #1e2d42; 
+    outline: none; 
+    box-shadow: 0 0 0 3px rgba(30, 45, 66, 0.1); 
+}
+.row { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px; 
+}
+
+/* 📍 주소 검색 전용 레이아웃 */
+.address-row { 
+    display: flex; 
+    gap: 10px; 
+    margin-bottom: 10px; 
+}
+.btn-search-addr { 
+    background-color: #1e2d42; 
+    color: white; 
+    border: none; 
+    padding: 0 20px; 
+    border-radius: 6px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    white-space: nowrap; 
+    font-size: 14px; 
+    transition: background 0.2s; 
+}
+.btn-search-addr:hover { 
+    background-color: #111a26; 
+}
+.readonly-bg { 
+    background-color: #fafafa; 
+    cursor: not-allowed; 
+}
+
+/* 하단 버튼 및 링크 */
+.btn-submit { 
+    width: 100%; 
+    background-color: #1e2d42; 
+    color: white; 
+    padding: 14px; 
+    font-size: 16px; 
+    font-weight: bold; 
+    border: none; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    margin-top: 20px; 
+    transition: background-color 0.2s; 
+}
+.btn-submit:hover { 
+    background-color: #111a26; 
+}
+.btn-back { 
+    display: block; 
+    text-align: center; 
+    margin-top: 15px; 
+    color: #6c757d; 
+    text-decoration: none; 
+    font-size: 14px; 
+}
+.btn-back:hover { 
+    text-decoration: underline; 
+}

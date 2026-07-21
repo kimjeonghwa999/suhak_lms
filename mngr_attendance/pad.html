@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학원 출석 패드 - 등원 확인</title>
+    <style>
+        body { font-family: 'Malgun Gothic', sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; }
+        .pad-container { background: #ffffff; width: 100%; max-width: 450px; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); text-align: center; }
+        
+        .header-title { font-size: 24px; font-weight: bold; color: #2c3e50; margin-bottom: 5px; }
+        .header-subtitle { font-size: 14px; color: #7f8c8d; margin-bottom: 25px; }
+        
+        /* 번호 표시창 */
+        .display-box { background-color: #f8f9fa; border: 2px solid #ced4da; border-radius: 8px; padding: 15px; font-size: 32px; font-weight: bold; color: #2c3e50; letter-spacing: 5px; min-height: 38px; margin-bottom: 25px; display: flex; justify-content: center; align-items: center; }
+        .display-box:empty::before { content: "번호 4자리를 입력하세요"; font-size: 18px; color: #95a5a6; letter-spacing: 0; }
+        
+        /* 3x4 숫자 키패드 그리드 레이아웃 */
+        .keypad-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+        .key-btn { background-color: #ffffff; border: 1px solid #dcdde1; border-radius: 8px; padding: 18px; font-size: 20px; font-weight: bold; color: #2c3e50; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: all 0.1s; }
+        .key-btn:active { background-color: #f1f2f6; transform: scale(0.97); }
+        .key-btn.clear { background-color: #f5f6fa; color: #7f8c8d; }
+        .key-btn.back { background-color: #f5f6fa; color: #7f8c8d; }
+        
+        /* 등하원 확인 액션 버튼 */
+        .action-box { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .btn-action { padding: 16px; font-size: 18px; font-weight: bold; color: white; border: none; border-radius: 8px; cursor: pointer; transition: background 0.1s; }
+        .btn-in { background-color: #2ecc71; }
+        .btn-in:hover { background-color: #27ae60; }
+        .btn-out { background-color: #3498db; }
+        .btn-out:hover { background-color: #2980b9; }
+
+        /* 뒤로가기 링크 */
+        .link-back { display: inline-block; margin-top: 20px; color: #bdc3c7; text-decoration: none; font-size: 13px; }
+        .link-back:hover { color: #7f8c8d; text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="pad-container">
+        <!-- 학원 상단 타이틀 동적 연동용 -->
+        <div class="header-title" id="padTitle">학원 출석 시스템</div>
+        <div class="header-subtitle">뒷자리 번호 4자리를 누르고 버튼을 선택하세요.</div>
+
+        <!-- 실시간 번호 입력창 -->
+        <div class="display-box" id="numDisplay"></div>
+
+        <!-- 숫자 키패드 -->
+        <div class="keypad-grid">
+            <button class="key-btn" onclick="pressNum('1')">1</button>
+            <button class="key-btn" onclick="pressNum('2')">2</button>
+            <button class="key-btn" onclick="pressNum('3')">3</button>
+            <button class="key-btn" onclick="pressNum('4')">4</button>
+            <button class="key-btn" onclick="pressNum('5')">5</button>
+            <button class="key-btn" onclick="pressNum('6')">6</button>
+            <button class="key-btn" onclick="pressNum('7')">7</button>
+            <button class="key-btn" onclick="pressNum('8')">8</button>
+            <button class="key-btn" onclick="pressNum('9')">9</button>
+            <button class="key-btn clear" onclick="clearAll()">전체취소</button>
+            <button class="key-btn" onclick="pressNum('0')">0</button>
+            <button class="key-btn back" onclick="pressBack()">◀ 지우기</button>
+        </div>
+
+        <!-- 최종 등하원 전송 버튼 -->
+        <div class="action-box">
+            <button class="btn-action btn-in" onclick="processAttendance('등원')">🏠 등 원</button>
+            <button class="btn-action btn-out" onclick="processAttendance('하원')">🚌 하 원</button>
+        </div>
+
+        <a href="attendance.html" class="link-back">← 관리자 실시간 출석부로 가기</a>
+    </div>
+
+    <script>
+        let inputNumber = "";
+        const display = document.getElementById('numDisplay');
+
+        // 시스템 설정에 저장된 학원명 불러오기 연동
+        window.onload = function() {
+            const savedAcademyName = localStorage.getItem('academyName');
+            if(savedAcademyName) {
+                document.getElementById('padTitle').innerText = savedAcademyName;
+            }
+        }
+
+        // 숫자 패드 타이핑 함수 (최대 4자리 제한 유효성 검사)
+        function pressNum(num) {
+            if (inputNumber.length < 4) {
+                inputNumber += num;
+                display.innerText = inputNumber;
+            }
+        }
+
+        // 지우기 버튼 함수
+        function pressBack() {
+            inputNumber = inputNumber.slice(0, -1);
+            display.innerText = inputNumber;
+        }
+
+        // 전체 취소 함수
+        function clearAll() {
+            inputNumber = "";
+            display.innerText = "";
+        }
+
+        // 가상의 학생 DB 세팅 (뒷자리 일치 확인용 예시 데이터)
+        const studentDB = {
+            "1234": "김철수",
+            "5678": "이영희",
+            "0000": "박민수"
+        };
+
+        // 등하원 최종 전송 및 유효성 검사 처리 함수
+        function processAttendance(type) {
+            if (inputNumber.length < 4) {
+                alert("❗ 뒷자리 번호 4자리를 정확하게 입력해 주세요.");
+                return;
+            }
+
+            const studentName = studentDB[inputNumber];
+
+            if (studentName) {
+                // 알림창 팝업 안내 (추후 태블릿 스피커 알림음 연동 가능 구조)
+                alert(`🎉 [${studentName}] 학생이 정상적으로 [${type}] 처리되었습니다.\n안전한 등하원을 확인했습니다.`);
+                
+                // 가상의 출석 상태 데이터 업데이트 처리 (관리자 화면 연동용)
+                if (type === '등원') {
+                    localStorage.setItem(`student_status_${inputNumber}`, '출석');
+                } else {
+                    localStorage.setItem(`student_status_${inputNumber}`, '하원');
+                }
+            } else {
+                alert("❌ 등록되지 않은 학생 번호입니다.\n번호를 다시 확인하거나 상담실에 문의하세요.");
+            }
+
+            // 전송 후 입력칸 리셋
+            clearAll();
+        }
+    </script>
+
+</body>
+</html>

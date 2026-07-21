@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수학 학습 시스템 - 학생 강의실</title>
+    <!-- 🔗 🔥 admin 폴더 밖으로 격리 분리된 사용자 전용 스타일시트 호출 경로 정밀 교정 완료 -->
+    <link rel="stylesheet" href="../css/user_style.css">
+</head>
+<body>
+
+    <!-- 상단 클래스 선택 바 -->
+    <div class="class-selector-bar">
+        <span class="class-label">나의 클래스</span>
+        <select class="select-class-dropdown" id="studentClassSelect" onchange="loadTeacherCurriculum()">
+            <option value="high3" selected>03_고등학교 과정</option>
+            <option value="mid3">02_중학교 과정</option>
+            <option value="elem5">01_초등학교 과정</option>
+        </select>
+    </div>
+
+    <!-- 대시보드 박스 -->
+    <div class="classroom-container">
+        
+        <!-- 교재 헤더 타이틀 바 -->
+        <div class="textbook-header">
+            <div class="textbook-title" id="studentTextbookTitle">배정된 수학 교재가 없습니다.</div>
+            <div class="tab-switch-box">
+                <button class="tab-btn">학생</button>
+                <button class="tab-btn active">클래스</button>
+            </div>
+        </div>
+
+        <!-- 선생님이 입력한 목차가 회색 리스트 띠 형태로 출력되는 컨테이너 -->
+        <div class="chapter-wrapper" id="studentChapterContainer"></div>
+
+    </div>
+
+    <script>
+        function loadTeacherCurriculum() {
+            const selectedClassCode = document.getElementById('studentClassSelect').value;
+            const container = document.getElementById('studentChapterContainer');
+            const titleElement = document.getElementById('studentTextbookTitle');
+            
+            // 공용 가상 DB에서 데이터 긁어오기
+            const db = JSON.parse(localStorage.getItem('sharedClassDB')) || [];
+            const matchedClass = db.find(item => item.classCode === selectedClassCode);
+            
+            container.innerHTML = ""; 
+
+            if (matchedClass) {
+                titleElement.innerText = matchedClass.textbook;
+                
+                if (matchedClass.chapters && matchedClass.chapters.length > 0) {
+                    matchedClass.chapters.forEach(chapterName => {
+                        const row = document.createElement('div');
+                        row.className = "chapter-row";
+                        row.innerHTML = `
+                            <span>${chapterName}</span>
+                            <button class="print-icon-btn" onclick="alert('✍️ [${chapterName}]의 오답노트 자습방을 시작합니다.')">🖨️</button>
+                        `;
+                        container.appendChild(row);
+                    });
+                } else {
+                    container.innerHTML = "<div style='text-align:center; padding:30px; color:#999; font-size:14px;'>교재는 배정되었으나, 상세 세부 단원 목차가 비어 있습니다.</div>";
+                }
+            } else {
+                titleElement.innerText = "배정된 교재 없음";
+                container.innerHTML = `<div style='text-align:center; padding:40px; color:#e74c3c; font-size:14px; font-weight:bold;'>⚠️ 선생님이 아직 이 클래스에 수학 교재 및 학습 목차를 입력하지 않았습니다.</div>`;
+            }
+        }
+
+        window.onload = function() {
+            loadTeacherCurriculum(); 
+        }
+    </script>
+</body>
+</html>

@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>교육 지원 시스템 - 환경 설정</title>
-    <link rel="stylesheet" href="../../css/mngr_setting.css">
+    
+    <!-- 🔗 🔥 점 기호(..) 개수를 수정하여 admin/css/mngr_setting.css 경로와 정밀 연결 완료! -->
+    <link rel="stylesheet" href="../css/mngr_setting.css">
+    
     <script src="https://daumcdn.net"></script>
 </head>
 <body>
@@ -69,11 +72,10 @@
                         </td>
                     </tr>
                     
-                    <!-- 🛠️ 원장님이 요청하신 출퇴근 허용 반경 설정 칸 추가! -->
                     <tr>
                         <th>교사 출퇴근 허용 반경</th>
                         <td>
-                            <select id="allowedRadius" class="select-radius">
+                            <select id="allowedRadius" class="select-radius" style="padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; font-size: 14px; background-color: #ffffff; color: #333; font-weight: bold;">
                                 <option value="100">100m 이내 (타이트한 보안)</option>
                                 <option value="150" selected>150m 이내 (추천 표준범위)</option>
                                 <option value="200">200m 이내 (GPS 수신 불안정 지역)</option>
@@ -134,7 +136,7 @@
             if(localStorage.getItem('academyName')) {
                 document.getElementById('academyName').value = localStorage.getItem('academyName');
                 document.getElementById('institutionType').value = localStorage.getItem('institutionType') || "지역아동센터";
-                document.getElementById('allowedRadius').value = localStorage.getItem('allowedRadius') || "150"; // 반경 불러오기
+                document.getElementById('allowedRadius').value = localStorage.getItem('allowedRadius') || "150";
                 document.getElementById('topName').value = localStorage.getItem('topName');
                 document.getElementById('bottomName').value = localStorage.getItem('bottomName');
                 document.getElementById('ownerName').value = localStorage.getItem('ownerName');
@@ -167,7 +169,7 @@
             event.preventDefault();
             localStorage.setItem('academyName', document.getElementById('academyName').value);
             localStorage.setItem('institutionType', document.getElementById('institutionType').value);
-            localStorage.setItem('allowedRadius', document.getElementById('allowedRadius').value); // 반경값 로컬스토리지 저장
+            localStorage.setItem('allowedRadius', document.getElementById('allowedRadius').value);
             localStorage.setItem('topName', document.getElementById('topName').value);
             localStorage.setItem('bottomName', document.getElementById('bottomName').value);
             localStorage.setItem('ownerName', document.getElementById('ownerName').value);

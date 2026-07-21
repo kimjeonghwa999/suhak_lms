@@ -4,14 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>교육공감(주) - 클래스관리 리스트</title>
-    <!-- 🔗 외부로 독립 분리시킨 리스트 전용 스타일시트 정밀 연결 -->
     <link rel="stylesheet" href="../css/mngr_list.css">
 </head>
 <body>
 
     <div class="title-bar">클래스관리 리스트</div>
 
-    <!-- 필터 및 등록 버튼 바 -->
     <div class="filter-container">
         <div class="filter-inputs">
             <select><option>전체</option></select>
@@ -23,7 +21,7 @@
         <button class="btn-register" onclick="openModal()">클래스 등록</button>
     </div>
 
-    <!-- 클래스 목록 테이블 -->
+    <!-- 목록 테이블 -->
     <table class="class-table">
         <thead>
             <tr>
@@ -52,35 +50,11 @@
                 <td class="text-center"><span class="link-action">수정</span></td>
                 <td class="text-center"><span class="link-action">+</span></td>
             </tr>
-            <tr>
-                <td class="text-center">2</td>
-                <td class="text-center">운영중</td>
-                <td><strong>02_중학교과정</strong></td>
-                <td>백승태</td>
-                <td>중3</td>
-                <td>[표준18] 중3-1-3.4 단원</td>
-                <td class="text-center">1</td>
-                <td>20200302 ~ 20201230</td>
-                <td class="text-center"><span class="link-action">수정</span></td>
-                <td class="text-center"><span class="link-action">+</span></td>
-            </tr>
-            <tr>
-                <td class="text-center">3</td>
-                <td class="text-center">운영중</td>
-                <td><strong>03_고등학교 과정</strong></td>
-                <td>백승태</td>
-                <td>미적분1<div class="sub-text">확률과 통계</div></td>
-                <td>미적분<div class="sub-text">[표준18] 확률과 통계</div></td>
-                <td class="text-center">1</td>
-                <td>20200302 ~ 20201230</td>
-                <td class="text-center"><span class="link-action">수정</span></td>
-                <td class="text-center"><span class="link-action">+</span></td>
-            </tr>
         </tbody>
     </table>
 
 
-    <!-- [클래스 등록] 모달 팝업 구조 -->
+    <!-- 🛠️ 원본 스크린샷 완벽 재현 모달 팝업 구조 -->
     <div class="modal-overlay" id="classModal">
         <div class="modal-box">
             <div class="modal-header">
@@ -111,7 +85,6 @@
                                     <option value="">선택</option>
                                     <option value="백승태">백승태</option>
                                     <option value="박지혜">박지혜</option>
-                                    <option value="최현서">최현서</option>
                                 </select>
                             </td>
                         </tr>
@@ -135,23 +108,15 @@
         </div>
     </div>
 
-
     <script>
-        function openModal() {
-            document.getElementById('classModal').style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('classModal').style.display = 'none';
-        }
-
+        function openModal() { document.getElementById('classModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('classModal').style.display = 'none'; }
         function saveModalData(event) {
             event.preventDefault();
-            alert("🎉 새로운 수학 클래스가 리스트에 등록되었습니다!");
+            alert("🎉 클래스가 성공적으로 등록되었습니다.");
             closeModal();
             document.getElementById('modalForm').reset();
         }
     </script>
-
 </body>
 </html>

@@ -3,60 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>학원 관리 시스템 - 목록</title>
+    <title>교육공감(주) - 클래스관리 리스트</title>
     <style>
-        body { font-family: 'Malgun Gothic', sans-serif; margin: 30px; background-color: #f4f6f9; color: #333; }
-        .header-box { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #2c3e50; padding-bottom: 15px; margin-bottom: 20px; }
-        h2 { color: #2c3e50; margin: 0; }
-        .btn-go-register { background-color: #2ecc71; color: white; padding: 10px 20px; font-size: 14px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; transition: background-color 0.2s; }
-        .btn-go-register:hover { background-color: #27ae60; }
-        table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #e9ecef; }
-        th { background-color: #2c3e50; color: white; font-weight: 600; }
-        tr:hover { background-color: #f8f9fa; }
-        .delete-btn { background-color: #dc3545; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; }
-        .delete-btn:hover { background-color: #bd2130; }
+        body { font-family: 'Malgun Gothic', sans-serif; margin: 20px; background-color: #f4f6f9; color: #333; }
+        
+        /* 상단 타이틀 영역 */
+        .title-bar { font-size: 15px; font-weight: bold; color: #555; margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 8px; }
+        
+        /* 🛠️ 원본과 매칭되는 상단 검색 필터 영역 */
+        .filter-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .filter-inputs { display: flex; gap: 5px; }
+        .filter-inputs select { padding: 4px 8px; border: 1px solid #ccc; font-size: 13px; background: #fff; }
+        
+        /* 클래스 등록 버튼 스타일 */
+        .btn-register { background-color: #ffffff; border: 1px solid #adadad; padding: 5px 12px; font-size: 13px; color: #333; cursor: pointer; border-radius: 3px; font-weight: bold; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .btn-register:hover { background-color: #ebebeb; border-color: #adadad; }
+        
+        /* 🛠️ 실제 화면 그리드와 동일한 테이블 구조 */
+        .class-table { width: 100%; border-collapse: collapse; background: white; font-size: 13px; border: 1px solid #ccc; }
+        .class-table th { background-color: #f5f5f5; border: 1px solid #ccc; padding: 8px 10px; font-weight: bold; text-align: left; color: #333; }
+        .class-table td { border: 1px solid #e2e2e2; padding: 8px 10px; text-align: left; vertical-align: top; line-height: 1.4; }
+        .class-table tr:hover { background-color: #f9f9f9; }
+        
+        /* 중앙 정렬이 필요한 컬럼들 */
+        .text-center { text-align: center; }
+        
+        /* 텍스트 줄바꿈 스타일 (과정/학년 멀티라인 대응) */
+        .sub-text { font-size: 11px; color: #777; margin-top: 2px; }
+        
+        /* 수정 / 수강신청 링크 스타일 */
+        .link-action { color: #0066cc; text-decoration: none; cursor: pointer; }
+        .link-action:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
-    <div class="header-box">
-        <h2>🏢 가맹 학원 목록 관리</h2>
-        <!-- 🔗 같은 폴더 내 register.html로 이동하도록 수정 완료 -->
-        <button class="btn-go-register" onclick="location.href='register.html'">➕ 신규 학원 등록하기</button>
+    <div class="title-bar">클래스관리 리스트</div>
+
+    <!-- 필터 및 등록 버튼 바 -->
+    <div class="filter-container">
+        <div class="filter-inputs">
+            <select><option>전체</option></select>
+            <select><option>전과정</option></select>
+            <select><option>전학년</option></select>
+            <select><option>전클래스</option></select>
+            <select><option>전교사</option></select>
+        </div>
+        <!-- 🔗 클릭 시 방금 만든 수학 클래스 등록 페이지로 이동 -->
+        <button class="btn-register" onclick="location.href='register.html'">클래스 등록</button>
     </div>
 
-    <table>
+    <!-- 원본 데이터 연동형 테이블 -->
+    <table class="class-table">
         <thead>
             <tr>
-                <th>학원명</th>
-                <th>원장명</th>
-                <th>대표 연락처</th>
-                <th>구분</th>
-                <th>학원 주소</th>
-                <th style="width: 80px;">관리</th>
+                <th style="width: 40px;" class="text-center"></th>
+                <th style="width: 80px;" class="text-center">상태</th>
+                <th>클래스명</th>
+                <th style="width: 100px;">담당교사</th>
+                <th style="width: 120px;">과정/학년</th>
+                <th>학습과정</th>
+                <th style="width: 80px;" class="text-center">수강인원</th>
+                <th style="width: 180px;">개설기간</th>
+                <th style="width: 60px;" class="text-center">관리</th>
+                <th style="width: 80px;" class="text-center">수강신청</th>
             </tr>
         </thead>
-        <tbody id="academyTableBody">
+        <tbody>
+            <!-- 1번 데이터 -->
             <tr>
-                <td><strong>기본 샘플 학원</strong></td>
-                <td>홍길동</td>
-                <td>02-123-4567</td>
-                <td>종합 학원</td>
-                <td>서울시 마포구 독막로</td>
-                <td><button class="delete-btn" onclick="deleteAcademy(this)">해지</button></td>
+                <td class="text-center">1</td>
+                <td class="text-center">운영중</td>
+                <td><strong>01_초등학교과정</strong></td>
+                <td>백승태</td>
+                <td>초등5</td>
+                <td>[표준18] 초5-1-1.2.3 단원</td>
+                <td class="text-center">1</td>
+                <td>20200302 ~ 20201230</td>
+                <td class="text-center"><span class="link-action">수정</span></td>
+                <td class="text-center"><span class="link-action">+</span></td>
+            </tr>
+            <!-- 2번 데이터 -->
+            <tr>
+                <td class="text-center">2</td>
+                <td class="text-center">운영중</td>
+                <td><strong>02_중학교과정</strong></td>
+                <td>백승태</td>
+                <td>중3</td>
+                <td>[표준18] 중3-1-3.4 단원</td>
+                <td class="text-center">1</td>
+                <td>20200302 ~ 20201230</td>
+                <td class="text-center"><span class="link-action">수정</span></td>
+                <td class="text-center"><span class="link-action">+</span></td>
+            </tr>
+            <!-- 3번 데이터 -->
+            <tr>
+                <td class="text-center">3</td>
+                <td class="text-center">운영중</td>
+                <td><strong>03_고등학교 과정</strong></td>
+                <td>백승태</td>
+                <td>미적분1<div class="sub-text">확률과 통계</div></td>
+                <td>미적분<div class="sub-text">[표준18] 확률과 통계</div></td>
+                <td class="text-center">1</td>
+                <td>20200302 ~ 20201230</td>
+                <td class="text-center"><span class="link-action">수정</span></td>
+                <td class="text-center"><span class="link-action">+</span></td>
+            </tr>
+            <!-- 4번 데이터 -->
+            <tr>
+                <td class="text-center">4</td>
+                <td class="text-center">운영중</td>
+                <td><strong>박지혜</strong></td>
+                <td>박지혜</td>
+                <td>-</td>
+                <td>-</td>
+                <td class="text-center">0</td>
+                <td>20200101 ~ 20501231</td>
+                <td class="text-center"><span class="link-action">수정</span></td>
+                <td class="text-center"><span class="link-action">+</span></td>
+            </tr>
+            <!-- 5번 데이터 -->
+            <tr>
+                <td class="text-center">5</td>
+                <td class="text-center">운영중</td>
+                <td><strong>최현서</strong></td>
+                <td>최현서</td>
+                <td>-</td>
+                <td>-</td>
+                <td class="text-center">0</td>
+                <td>20200101 ~ 20501231</td>
+                <td class="text-center"><span class="link-action">수정</span></td>
+                <td class="text-center"><span class="link-action">+</span></td>
             </tr>
         </tbody>
     </table>
-
-    <script>
-        function deleteAcademy(button) {
-            if(confirm("정말 이 학원의 등록을 해지하시겠습니까?")) {
-                const row = button.parentElement.parentElement;
-                row.remove();
-            }
-        }
-    </script>
 
 </body>
 </html>

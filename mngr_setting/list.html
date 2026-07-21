@@ -6,15 +6,10 @@
     <title>학원 관리 시스템 - 목록</title>
     <style>
         body { font-family: 'Malgun Gothic', sans-serif; margin: 30px; background-color: #f4f6f9; color: #333; }
-        
-        /* 상단 타이틀 및 버튼 레이아웃 */
         .header-box { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #2c3e50; padding-bottom: 15px; margin-bottom: 20px; }
         h2 { color: #2c3e50; margin: 0; }
-        
-        /* 등록 페이지 이동 버튼 스타일 */
         .btn-go-register { background-color: #2ecc71; color: white; padding: 10px 20px; font-size: 14px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; transition: background-color 0.2s; }
         .btn-go-register:hover { background-color: #27ae60; }
-        
         table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #e9ecef; }
         th { background-color: #2c3e50; color: white; font-weight: 600; }
@@ -25,14 +20,12 @@
 </head>
 <body>
 
-    <!-- 상단 영역: 제목과 등록 이동 버튼 -->
     <div class="header-box">
         <h2>🏢 가맹 학원 목록 관리</h2>
-        <!-- 클릭 시 register.html로 이동하는 버튼 -->
+        <!-- 🔗 같은 폴더 내 register.html로 이동하도록 수정 완료 -->
         <button class="btn-go-register" onclick="location.href='register.html'">➕ 신규 학원 등록하기</button>
     </div>
 
-    <!-- 등록된 학원 목록 테이블 -->
     <table>
         <thead>
             <tr>
@@ -45,7 +38,6 @@
             </tr>
         </thead>
         <tbody id="academyTableBody">
-            <!-- 기본 샘플 데이터 -->
             <tr>
                 <td><strong>기본 샘플 학원</strong></td>
                 <td>홍길동</td>

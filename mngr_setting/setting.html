@@ -4,21 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>학원 관리 시스템 - 시스템 설정</title>
-    <!-- 🔗 mngr_setting 폴더 기준으로 외부 스타일시트 정밀 연결 -->
     <link rel="stylesheet" href="../../css/mngr_setting.css">
     <style>
-        /* 🛠️ 주소 검색창 전용 스타일 추가 */
         .address-row { display: flex; gap: 10px; margin-bottom: 8px; }
         .btn-search-addr { background-color: #34495e; color: white; border: none; padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; white-space: nowrap; font-size: 13px; }
         .btn-search-addr:hover { background-color: #1a252f; }
         .wide-input { max-width: 550px; }
     </style>
-    <!-- 🔗 Daum 카카오 우편번호 서비스 팝업 API 스크립트 로드 -->
     <script src="https://daumcdn.net"></script>
 </head>
 <body>
 
-    <!-- 상단 GNB 바 -->
     <header class="gnb-header">
         <div class="gnb-left">
             <span class="logo-text" id="topLogoText">교육공감(주)</span>
@@ -36,9 +32,8 @@
     </header>
 
     <div class="main-container">
-        <!-- 좌측 서브 메뉴 바 -->
         <nav class="sidebar">
-            <div class="sidebar-title">시스템 설정</div>
+            <div class="sidebar-title">系统 설정</div>
             <ul class="sidebar-menu">
                 <li class="active"><a href="setting.html">⚙️ 기본 정보 설정</a></li>
                 <li><a href="../mngr_attendance/attendance.html">👥 학원생 출석 관리</a></li>
@@ -47,11 +42,9 @@
             </ul>
         </nav>
 
-        <!-- 우측 설정 양식 영역 -->
         <main class="content">
             <div class="page-title">⚙️ 시스템 기본 정보 설정</div>
 
-            <!-- 실시간 반영 확인 프리뷰 -->
             <div class="preview-box">
                 <strong>📢 상/하단 타이틀 실시간 적용 상태</strong><br>
                 • 현재 상단 헤더 로고: <span id="previewTop" style="font-weight: bold;">교육공감(주)</span> | 
@@ -62,29 +55,20 @@
                 <table class="setting-table">
                     <tr>
                         <th>학원명</th>
-                        <td>
-                            <input type="text" id="academyName" value="교육공감 수학학원" placeholder="학원 공식 명칭을 입력하세요">
-                        </td>
+                        <td><input type="text" id="academyName" value="교육공감 수학학원"></td>
                     </tr>
                     <tr>
                         <th>상단 표시 명칭 (로고)</th>
-                        <td>
-                            <input type="text" id="topName" value="교육공감(주)" oninput="updatePreview()" placeholder="좌측 상단에 띄울 브랜드/회사명">
-                        </td>
+                        <td><input type="text" id="topName" value="교육공감(주)" oninput="updatePreview()"></td>
                     </tr>
                     <tr>
                         <th>하단 표시 명칭 (푸터)</th>
-                        <td>
-                            <input type="text" id="bottomName" value="교육공감(주) Copyright All Rights Reserved." oninput="updatePreview()" placeholder="페이지 하단 카피라이트 문구">
-                        </td>
+                        <td><input type="text" id="bottomName" value="교육공감(주) Copyright All Rights Reserved." oninput="updatePreview()"></td>
                     </tr>
                     <tr>
                         <th>학원장 (대표자명)</th>
-                        <td>
-                            <input type="text" id="ownerName" value="홍길동" placeholder="원장님 성함">
-                        </td>
+                        <td><input type="text" id="ownerName" value="홍길동"></td>
                     </tr>
-                    <!-- 🛠️ 학원 주소 영역 카카오 주소 검색 연동 레이아웃으로 변경 -->
                     <tr>
                         <th>학원 주소</th>
                         <td>
@@ -92,7 +76,7 @@
                                 <input type="text" id="postcode" value="04100" placeholder="우편번호" readonly style="max-width: 120px;">
                                 <button type="button" class="btn-search-addr" onclick="execDaumPostcode()">주소 검색</button>
                             </div>
-                            <input type="text" id="academyAddress" class="wide-input" value="서울시 마포구 독막로 123" placeholder="기본 주소" readonly style="margin-bottom: 8px;"><br>
+                            <input type="text" id="academyAddress" class="wide-input" value="서울시 마포구 독막로 123" readonly style="margin-bottom: 8px;"><br>
                             <input type="text" id="detailAddress" class="wide-input" value="3층" placeholder="상세 주소를 입력하세요">
                         </td>
                     </tr>
@@ -108,13 +92,10 @@
                     </tr>
                     <tr>
                         <th>대표 이메일</th>
-                        <td>
-                            <input type="email" id="academyEmail" value="jjeonghwa80@naver.com" placeholder="대표 이메일 주소">
-                        </td>
+                        <td><input type="email" id="academyEmail" value="jjeonghwa80@naver.com"></td>
                     </tr>
                 </table>
 
-                <!-- 버튼 그룹 -->
                 <div class="btn-box">
                     <button type="submit" class="btn-save">설정 저장</button>
                     <button type="button" class="btn-cancel" onclick="location.href='../mngr_class/list1.html'">취소</button>
@@ -124,19 +105,26 @@
     </div>
 
     <script>
-        // 🛠️ 카카오 우편번호 팝업 구동 함수
+        // 페이지 로드 시 기존 저장된 데이터가 있다면 불러오기
+        window.onload = function() {
+            if(localStorage.getItem('academyName')) {
+                document.getElementById('academyName').value = localStorage.getItem('academyName');
+                document.getElementById('topName').value = localStorage.getItem('topName');
+                document.getElementById('bottomName').value = localStorage.getItem('bottomName');
+                document.getElementById('ownerName').value = localStorage.getItem('ownerName');
+                document.getElementById('postcode').value = localStorage.getItem('postcode');
+                document.getElementById('academyAddress').value = localStorage.getItem('academyAddress');
+                document.getElementById('detailAddress').value = localStorage.getItem('detailAddress');
+                updatePreview();
+            }
+        }
+
         function execDaumPostcode() {
             new daum.Postcode({
                 oncomplete: function(data) {
-                    let addr = '';
-                    if (data.userSelectedType === 'R') {
-                        addr = data.roadAddress;
-                    } else {
-                        addr = data.jibunAddress;
-                    }
                     document.getElementById('postcode').value = data.zonecode;
-                    document.getElementById('academyAddress').value = addr;
-                    document.getElementById('detailAddress').value = ''; // 주소 바뀌면 상세주소 초기화
+                    document.getElementById('academyAddress').value = data.roadAddress || data.jibunAddress;
+                    document.getElementById('detailAddress').value = '';
                     document.getElementById('detailAddress').focus();
                 }
             }).open();
@@ -145,20 +133,39 @@
         function updatePreview() {
             const topVal = document.getElementById('topName').value;
             const bottomVal = document.getElementById('bottomName').value;
-            
-            document.getElementById('topLogoText').innerText = topVal ? topVal : '학원시스템';
-            document.getElementById('previewTop').innerText = topVal ? topVal : '(공백)';
-            document.getElementById('previewBottom').innerText = bottomVal ? bottomVal : '(공백)';
+            document.getElementById('topLogoText').innerText = topVal || '학원시스템';
+            document.getElementById('previewTop').innerText = topVal || '(공백)';
+            document.getElementById('previewBottom').innerText = bottomVal || '(공백)';
         }
 
         function saveSettings(event) {
             event.preventDefault();
-            const academyName = document.getElementById('academyName').value;
-            const fullAddress = document.getElementById('academyAddress').value + " " + document.getElementById('detailAddress').value;
             
-            alert(`💾 [${academyName}]의 시스템 설정 정보가 변경되었습니다.\n📍 지정 주소: ${fullAddress}`);
+            // 데이터 LocalStorage에 저장하여 근태 페이지와 공유
+            localStorage.setItem('academyName', document.getElementById('academyName').value);
+            localStorage.setItem('topName', document.getElementById('topName').value);
+            localStorage.setItem('bottomName', document.getElementById('bottomName').value);
+            localStorage.setItem('ownerName', document.getElementById('ownerName').value);
+            localStorage.setItem('postcode', document.getElementById('postcode').value);
+            
+            const mainAddr = document.getElementById('academyAddress').value;
+            localStorage.setItem('academyAddress', mainAddr);
+            localStorage.setItem('detailAddress', document.getElementById('detailAddress').value);
+
+            // 💡 유효성 검사용 가상 좌표 연동: 주소가 바뀌면 기준 GPS 자동 시뮬레이션 변경
+            // 테스트 편의성을 위해 기본 위치는 마포구 대흥역 학원가 좌표로 지정
+            let lat = 37.5475;
+            let lon = 126.9421;
+            
+            // 주소에 특정 지역 키워드가 감지되면 해당 시/도 좌표로 가상 전환하여 매칭 유효성 실감 테스트 가능
+            if(mainAddr.includes('강남')) { lat = 37.4979; lon = 127.0276; }
+            else if(mainAddr.includes('부산')) { lat = 35.1795; lon = 129.0756; }
+            
+            localStorage.setItem('academyLat', lat);
+            localStorage.setItem('academyLon', lon);
+
+            alert(`💾 시스템 정보 및 학원 위치 기준점 설정이 완료되었습니다!\n📍 지정 주소: ${mainAddr}`);
         }
     </script>
-
 </body>
 </html>

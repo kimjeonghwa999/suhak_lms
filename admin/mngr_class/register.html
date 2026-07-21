@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학원 관리 시스템 - 신규 등록</title>
+    <style>
+        body { font-family: 'Malgun Gothic', sans-serif; background-color: #f4f6f9; margin: 0; padding: 40px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; }
+        .register-container { background: #ffffff; width: 100%; max-width: 600px; padding: 40px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        h2 { color: #2c3e50; text-align: center; margin-top: 0; margin-bottom: 30px; font-size: 24px; border-bottom: 2px solid #e9ecef; padding-bottom: 15px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 8px; color: #495057; font-size: 14px; }
+        input[type="text"], input[type="tel"], select { width: 100%; padding: 12px; border: 1px solid #ced4da; border-radius: 6px; font-size: 15px; transition: border-color 0.2s; box-sizing: border-box; }
+        input:focus, select:focus { border-color: #34495e; outline: none; box-shadow: 0 0 0 3px rgba(52, 73, 94, 0.1); }
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .btn-submit { width: 100%; background-color: #2c3e50; color: white; padding: 14px; font-size: 16px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-top: 20px; transition: background-color 0.2s; }
+        .btn-submit:hover { background-color: #1a252f; }
+        .btn-back { display: block; text-align: center; margin-top: 15px; color: #6c757d; text-decoration: none; font-size: 14px; }
+        .btn-back:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <h2>🏢 신규 가맹 학원 등록</h2>
+        
+        <form id="registerForm" onsubmit="handleRegister(event)">
+            <div class="form-group">
+                <label for="academyName">학원명 <span style="color:red;">*</span></label>
+                <input type="text" id="academyName" placeholder="등록할 학원 이름을 입력하세요" required>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="ownerName">원장명 <span style="color:red;">*</span></label>
+                    <input type="text" id="ownerName" placeholder="원장님 성함" required>
+                </div>
+                <div class="form-group">
+                    <label for="academyType">학원 형태</label>
+                    <select id="academyType">
+                        <option value="단과 학원">단과 학원</option>
+                        <option value="종합 학원">종합 학원</option>
+                        <option value="교습소/공부방">교습소/공부방</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="academyPhone">대표 연락처 <span style="color:red;">*</span></label>
+                <input type="tel" id="academyPhone" placeholder="예: 02-1234-5678 또는 010-0000-0000" required>
+            </div>
+
+            <div class="form-group">
+                <label for="businessNumber">사업자 등록번호</label>
+                <input type="text" id="businessNumber" placeholder="000-00-00000">
+            </div>
+
+            <div class="form-group">
+                <label for="academyAddress">학원 주소</label>
+                <input type="text" id="academyAddress" placeholder="도로명 주소 또는 지번 주소 입력">
+            </div>
+
+            <button type="submit" class="btn-submit">새로운 학원 등록하기</button>
+        </form>
+
+        <!-- 🔗 list1.html에서 list.html로 주소 수정 완료 -->
+        <a href="list.html" class="btn-back">← 학원 목록 페이지로 돌아가기</a>
+    </div>
+
+    <script>
+        function handleRegister(event) {
+            event.preventDefault();
+
+            const academyData = {
+                name: document.getElementById('academyName').value,
+                owner: document.getElementById('ownerName').value,
+                type: document.getElementById('academyType').value,
+                phone: document.getElementById('academyPhone').value,
+                businessNum: document.getElementById('businessNumber').value,
+                address: document.getElementById('academyAddress').value
+            };
+
+            alert(`🎉 [${academyData.name}] 학원이 성공적으로 등록되었습니다!\n원장명: ${academyData.owner}`);
+            
+            document.getElementById('registerForm').reset();
+        }
+    </script>
+
+</body>
+</html>

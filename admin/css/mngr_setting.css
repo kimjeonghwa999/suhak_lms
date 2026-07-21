@@ -204,3 +204,18 @@ input:focus {
 .required-star {
     color: red;
 }
+
+/* 📍 출퇴근 허용 반경 설정용 커스텀 스타일 */
+.select-radius {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #ffffff;
+    color: #333;
+    font-weight: bold;
+}
+.select-radius:focus {
+    border-color: #004085;
+    outline: none;
+}

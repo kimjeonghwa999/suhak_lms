@@ -5,12 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>교육 지원 시스템 - 환경 설정</title>
     <link rel="stylesheet" href="../../css/mngr_setting.css">
-    <style>
-        .address-row { display: flex; gap: 10px; margin-bottom: 8px; }
-        .btn-search-addr { background-color: #34495e; color: white; border: none; padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; white-space: nowrap; font-size: 13px; }
-        .btn-search-addr:hover { background-color: #1a252f; }
-        .wide-input { max-width: 550px; }
-    </style>
     <script src="https://daumcdn.net"></script>
 </head>
 <body>
@@ -18,10 +12,9 @@
     <!-- 상단 GNB 바 -->
     <header class="gnb-header">
         <div class="gnb-left">
-            <!-- 💡 로고 텍스트 기본값을 범용 시스템 명칭으로 변경 -->
             <span class="logo-text" id="topLogoText">수학교육 지원시스템</span>
             <ul class="gnb-menu">
-                <li><a href="#">운영관리 ▾</a></li>
+                <li><a href="#">운영관리</a></li>
                 <li><a href="register.html">클래스 개설 ▾</a></li>
                 <li><a href="list.html">기관/클래스 관리 ▾</a></li>
                 <li><a href="../mngr_attendance/attendance.html" style="color: #e67e22;">⏱️ 학생출석관리</a></li>
@@ -58,7 +51,6 @@
             <form id="settingForm" onsubmit="saveSettings(event)">
                 <table class="setting-table">
                     <tr>
-                        <!-- 💡 학원명 대신 범용적인 지원 기관명으로 개편 -->
                         <th>지원 대상 기관명</th>
                         <td>
                             <input type="text" id="academyName" value="도서산간 지역아동센터" placeholder="학교명 또는 센터명을 입력하세요">
@@ -76,6 +68,20 @@
                             </select>
                         </td>
                     </tr>
+                    
+                    <!-- 🛠️ 원장님이 요청하신 출퇴근 허용 반경 설정 칸 추가! -->
+                    <tr>
+                        <th>교사 출퇴근 허용 반경</th>
+                        <td>
+                            <select id="allowedRadius" class="select-radius">
+                                <option value="100">100m 이내 (타이트한 보안)</option>
+                                <option value="150" selected>150m 이내 (추천 표준범위)</option>
+                                <option value="200">200m 이내 (GPS 수신 불안정 지역)</option>
+                                <option value="99999">제한 없음 (어디서나 출퇴근 가능)</option>
+                            </select>
+                        </td>
+                    </tr>
+
                     <tr>
                         <th>상단 표시 명칭 (로고)</th>
                         <td><input type="text" id="topName" value="수학교육 지원시스템" oninput="updatePreview()" placeholder="좌측 상단에 띄울 시스템 이름"></td>
@@ -128,6 +134,7 @@
             if(localStorage.getItem('academyName')) {
                 document.getElementById('academyName').value = localStorage.getItem('academyName');
                 document.getElementById('institutionType').value = localStorage.getItem('institutionType') || "지역아동센터";
+                document.getElementById('allowedRadius').value = localStorage.getItem('allowedRadius') || "150"; // 반경 불러오기
                 document.getElementById('topName').value = localStorage.getItem('topName');
                 document.getElementById('bottomName').value = localStorage.getItem('bottomName');
                 document.getElementById('ownerName').value = localStorage.getItem('ownerName');
@@ -160,6 +167,7 @@
             event.preventDefault();
             localStorage.setItem('academyName', document.getElementById('academyName').value);
             localStorage.setItem('institutionType', document.getElementById('institutionType').value);
+            localStorage.setItem('allowedRadius', document.getElementById('allowedRadius').value); // 반경값 로컬스토리지 저장
             localStorage.setItem('topName', document.getElementById('topName').value);
             localStorage.setItem('bottomName', document.getElementById('bottomName').value);
             localStorage.setItem('ownerName', document.getElementById('ownerName').value);
@@ -167,11 +175,10 @@
             localStorage.setItem('academyAddress', document.getElementById('academyAddress').value);
             localStorage.setItem('detailAddress', document.getElementById('detailAddress').value);
 
-            // 가상 GPS 매칭용 기준 좌표 세팅
             localStorage.setItem('academyLat', 37.5475);
             localStorage.setItem('academyLon', 126.9421);
 
-            alert(`💾 시스템 설정이 완료되었습니다.\n📍 현재 연동 기관: [${document.getElementById('academyName').value}]`);
+            alert(`💾 시스템 설정이 완료되었습니다.\n📍 출퇴근 허용 제한: [${document.getElementById('allowedRadius').value}m 이내]`);
         }
     </script>
 </body>

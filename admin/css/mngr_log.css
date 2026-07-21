@@ -1,0 +1,46 @@
+/* admin/css/mngr_log.css */
+
+/* 검색 필터 바 스타일 */
+.search-filter-box { 
+    background: white; 
+    padding: 15px 20px; 
+    border-radius: 6px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+    margin-bottom: 20px; 
+    display: flex; 
+    gap: 12px; 
+    align-items: center; 
+}
+.search-filter-box select { 
+    padding: 6px 12px; 
+    border: 1px solid #ced4da; 
+    border-radius: 4px; 
+    font-size: 14px; 
+    background: #fff; 
+}
+
+/* 근무 상태 배지 효과 */
+.work-badge { 
+    padding: 3px 8px; 
+    border-radius: 4px; 
+    font-size: 12px; 
+    font-weight: bold; 
+    color: white; 
+    display: inline-block; 
+}
+.badge-normal { 
+    background-color: #2ecc71; 
+} /* 정상 */
+.badge-late { 
+    background-color: #e67e22; 
+}   /* 지각 */
+.badge-early { 
+    background-color: #3498db; 
+}  /* 조퇴 */
+
+.summary-info { 
+    font-size: 13px; 
+    color: #666; 
+    margin-bottom: 10px; 
+    text-align: right; 
+}
